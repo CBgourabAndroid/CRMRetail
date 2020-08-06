@@ -52,6 +52,7 @@ class AddFoodingDetails : AppCompatActivity() {
     var FoodName=""
     var FoodPrice=""
     var PicPath=""
+    var mytest=""
 
     private  val FILE_NAME = "photo.jpg"
     private  val REQUEST_CODE = 42
