@@ -167,7 +167,7 @@
                             android:layout_marginLeft="18.7dp"
                             android:layout_marginTop="19dp"
                             android:layout_marginRight="18.9dp"
-                            android:text="* Branding Rate"
+                            android:text="* Branding Rate(approx)"
                             android:textColor="@color/logoColorTwo"
                             android:textStyle="bold" />
 
@@ -213,7 +213,7 @@
                             android:layout_marginLeft="18.7dp"
                             android:layout_marginTop="19dp"
                             android:layout_marginRight="18.9dp"
-                            android:text="* Brand Quentity"
+                            android:text="* Brand Quantiy(approx)"
                             android:textColor="@color/logoColorTwo"
                             android:textStyle="bold" />
 

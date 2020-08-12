@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.crmretail.modelClass.attandence.AttendanceResponce
@@ -26,6 +27,9 @@ import sun.bob.mcalendarview.MCalendarView
 import sun.bob.mcalendarview.MarkStyle
 import sun.bob.mcalendarview.listeners.OnDateClickListener
 import sun.bob.mcalendarview.vo.DateData
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AttendanceActivity: AppCompatActivity() {
@@ -65,6 +69,19 @@ class AttendanceActivity: AppCompatActivity() {
             progressDialog.show()
             callDataList()
         }
+
+
+
+        getSundays()
+
+
+    }
+
+    private fun getSundays() {
+
+
+
+
 
 
 
@@ -198,13 +215,13 @@ class AttendanceActivity: AppCompatActivity() {
                             Color.parseColor("#F36F21"))))
 
                     }
-                  else{
+                 /* else{
                         calendarView.markDate(DateData( PostInterface.format_date6(dataList[i].dutyDate).toInt(),
                             PostInterface.format_date5(dataList[i].dutyDate).toInt(),
                             PostInterface.format_date4(dataList[i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
                             Color.parseColor("#EBDF0F00"))))
 
-                    }
+                    }*/
         }
 
 

@@ -138,7 +138,7 @@ class EventAddActivity : AppCompatActivity() {
             callDataList()
         }
 
-        checkConnection()
+       // checkConnection()
     }
 
     private fun checkConnection() {
@@ -254,9 +254,9 @@ class EventAddActivity : AppCompatActivity() {
 
                     if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
 
-                        multiTxtH.setText("* Customers")
+                        multiTxtH.setText("* Dealer/Distributor")
                         locationEtd.setText("")
-                        locationEtd.setHint("Enter customer name")
+                        locationEtd.setHint("Enter dealer/distributor name")
                     }
                     else{
                         multiTxtH.setText("* Location")
