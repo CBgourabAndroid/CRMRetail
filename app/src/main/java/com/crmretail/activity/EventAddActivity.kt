@@ -64,6 +64,7 @@ class EventAddActivity : AppCompatActivity() {
     var startTime=""
     var endTime=""
     var eventType=""
+    var eventTypeID=""
 
     lateinit var reson: String
     lateinit var eventDateLay: LinearLayout
@@ -250,6 +251,20 @@ class EventAddActivity : AppCompatActivity() {
                 ) {
 
                     eventType=languages[position].toString()
+
+                    if (eventType.equals("Dealer/Distributer Meet")){
+                        eventTypeID="1"
+                    }
+                    else if(eventType.equals("Mason Meet")){
+                        eventTypeID="2"
+                    }
+                    else if(eventType.equals("Engineer Meet")){
+                        eventTypeID="3"
+                    }
+                    else if(eventType.equals("other")){
+                        eventTypeID="4"
+                    }
+
 
 
                     if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
@@ -561,7 +576,7 @@ class EventAddActivity : AppCompatActivity() {
 
 
                 reqEntity!!.addPart("user_id", StringBody(psh.id))
-                reqEntity!!.addPart("event_type", StringBody(eventType))
+                reqEntity!!.addPart("event_type", StringBody(eventTypeID))
                 reqEntity!!.addPart("event_date", StringBody(currentDateStart))
                 reqEntity!!.addPart("start_time", StringBody(startTime))
                 reqEntity!!.addPart("end_time", StringBody(endTime))

@@ -26,8 +26,8 @@ import sun.bob.mcalendarview.MCalendarView
 import sun.bob.mcalendarview.MarkStyle
 import sun.bob.mcalendarview.listeners.OnDateClickListener
 import sun.bob.mcalendarview.vo.DateData
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AttendanceActivity: AppCompatActivity() {
@@ -39,6 +39,7 @@ class AttendanceActivity: AppCompatActivity() {
     lateinit var dataList:ArrayList<Duty>
     var ly_left: LinearLayout? = null
     var ly_right: LinearLayout? = null
+    private var selectedDate: DateData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +71,7 @@ class AttendanceActivity: AppCompatActivity() {
 
 
 
-        getSundays()
+       // getSundays()
 
 
     }
@@ -78,10 +79,18 @@ class AttendanceActivity: AppCompatActivity() {
     private fun getSundays() {
 
 
+        val calendar: Calendar = Calendar.getInstance()
+        selectedDate = DateData(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        calendarView.markDate(selectedDate)
 
 
-
-
+        /*calendarView.markDate(DateData( 2020,8,14).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
+            Color.parseColor("#EBF11707"))))*/
 
 
     }
@@ -183,6 +192,8 @@ class AttendanceActivity: AppCompatActivity() {
 
 
 
+
+
         for (i in 0 until dataList.size) {
             /*calendarView.markDate(
                 PostInterface.format_date6(dataList[i].dutyDate).toInt(),
@@ -225,6 +236,9 @@ class AttendanceActivity: AppCompatActivity() {
 
                     }*/
         }
+
+
+
 
 
 
