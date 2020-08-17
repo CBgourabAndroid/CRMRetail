@@ -331,6 +331,8 @@ interface PostInterface {
                    @Field("longi") longi: String): Call<GeneralResponce2>
 
 
+
+
 /*
 
     @FormUrlEncoded
