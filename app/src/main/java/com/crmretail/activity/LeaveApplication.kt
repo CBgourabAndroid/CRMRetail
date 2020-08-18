@@ -157,7 +157,6 @@ class LeaveApplication: AppCompatActivity() {
                             recyclerView.adapter = hAdapter
 
                             dataList=response.body()!!.leaveList as ArrayList<LeaveList>
-                            Collections.reverse(dataList)
 
                             hAdapter.setHistoryListItems(this@LeaveApplication,
                                 dataList

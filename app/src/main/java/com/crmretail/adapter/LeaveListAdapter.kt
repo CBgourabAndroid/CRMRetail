@@ -20,7 +20,7 @@ class LeaveListAdapter  : RecyclerView.Adapter<LeaveListAdapter.MyViewHolder>(){
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        internal var lbl_StatusColor: TextView
+        internal var lStatusColor: TextView
         internal var lbl_textViewStatus: TextView
         internal var lbl_textViewtime: TextView
         internal var lbl_textViewReason: TextView
@@ -28,7 +28,7 @@ class LeaveListAdapter  : RecyclerView.Adapter<LeaveListAdapter.MyViewHolder>(){
 
         init {
 
-            lbl_StatusColor = itemView.findViewById(R.id.stats_color)
+            lStatusColor = itemView.findViewById(R.id.stats_color)
             lbl_textViewStatus = itemView.findViewById(R.id.textViewStatus)
             lbl_textViewtime = itemView.findViewById(R.id.textViewtime)
             lbl_textViewReason = itemView.findViewById(R.id.textViewReason)
@@ -52,20 +52,20 @@ class LeaveListAdapter  : RecyclerView.Adapter<LeaveListAdapter.MyViewHolder>(){
 
 
         holder.lbl_textViewStatus.setText("Status : "+dataList[listPosition].leaveStatus.toString())
-        holder.lbl_textViewtime.setText("Time Frame :  "+dataList[listPosition].leaveStatus.toString())
-        holder.lbl_textViewReason.setText("Reason of Leave\n"+dataList[listPosition].leaveStatus.toString())
+        holder.lbl_textViewtime.setText("Time Frame :  "+dataList[listPosition].fromDate.toString()+" To "+dataList[listPosition].toDate.toString())
+        holder.lbl_textViewReason.setText("Reason of Leave\n"+dataList[listPosition].reason.toString())
 
         if (dataList[listPosition].leaveStatus.equals("Not Approved")){
 
-            holder.lbl_StatusColor.setBackgroundColor(Color.parseColor("#EBF11707"));
+            holder.lStatusColor.setBackgroundColor(Color.parseColor("#EBF11707"));
         }
         else if (dataList[listPosition].leaveStatus.equals("Approved")){
 
-            holder.lbl_StatusColor.setBackgroundColor(Color.parseColor("#1A951F"));
+            holder.lStatusColor.setBackgroundColor(Color.parseColor("#1A951F"));
         }
         else{
 
-            holder.lbl_StatusColor.setBackgroundColor(Color.parseColor("#F36F21"));
+            holder.lStatusColor.setBackgroundColor(Color.parseColor("#F36F21"));
         }
 
 
@@ -80,7 +80,7 @@ class LeaveListAdapter  : RecyclerView.Adapter<LeaveListAdapter.MyViewHolder>(){
         viewType: Int
     ): LeaveListAdapter.MyViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_holyday, parent, false)
+            .inflate(R.layout.item_leave, parent, false)
 
 
         return LeaveListAdapter.MyViewHolder(view)
