@@ -1,0 +1,76 @@
+
+package com.crmretail.modelClass;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class EventList {
+
+    @SerializedName("event_id")
+    @Expose
+    private Integer eventId;
+    @SerializedName("event_date")
+    @Expose
+    private String eventDate;
+    @SerializedName("start_time")
+    @Expose
+    private String startTime;
+    @SerializedName("time_format")
+    @Expose
+    private String timeFormat;
+    @SerializedName("location")
+    @Expose
+    private String location;
+    @SerializedName("event_type")
+    @Expose
+    private String eventType;
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getTimeFormat() {
+        return timeFormat;
+    }
+
+    public void setTimeFormat(String timeFormat) {
+        this.timeFormat = timeFormat;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+}

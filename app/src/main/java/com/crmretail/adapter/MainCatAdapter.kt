@@ -115,6 +115,10 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
 
                     context!!.startActivity(Intent(context, BrandTrackActivity::class.java))
                 }
+                else if(names!![listPosition].equals("Event Management")){
+
+                    context!!.startActivity(Intent(context, AllEventListActivity::class.java))
+                }
             }
             else{
 

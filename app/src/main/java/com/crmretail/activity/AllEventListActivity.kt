@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.PostInterface
 import com.crmretail.R
+import com.crmretail.adapter.EventListAdapter
 import com.crmretail.adapter.HolyDayAdapter
+import com.crmretail.modelClass.EventList
+import com.crmretail.modelClass.EventListResponse
 import com.crmretail.modelClass.Holiday
 import com.crmretail.modelClass.HolydayResponse
 import com.crmretail.shared.UserShared
@@ -28,7 +31,7 @@ class AllEventListActivity : AppCompatActivity() {
     lateinit var psh: UserShared
     lateinit var toolbar: Toolbar
     lateinit var recyclerView: RecyclerView
-    lateinit var hAdapter: HolyDayAdapter
+    lateinit var hAdapter: EventListAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,9 +85,9 @@ class AllEventListActivity : AppCompatActivity() {
 
         val userAPI = retrofit.create(PostInterface::class.java!!)
 
-        userAPI.holidays("Bearer "+psh.accessToken,psh.id).enqueue(object :
-            Callback<HolydayResponse> {
-            override fun onResponse(call: Call<HolydayResponse>, response: Response<HolydayResponse>) {
+        userAPI.getEventList("Bearer "+psh.accessToken,psh.id).enqueue(object :
+            Callback<EventListResponse> {
+            override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 println("onResponse")
                 System.out.println(response.toString())
 
@@ -99,13 +102,13 @@ class AllEventListActivity : AppCompatActivity() {
 
                         // Toast.makeText(applicationContext, "Good", Toast.LENGTH_SHORT).show()
 
-                        if (response.body()!!.holidays!=null&& response.body()!!.holidays.size>0){
+                        if (response.body()!!.eventList!=null&& response.body()!!.eventList.size>0){
 
-                            hAdapter= HolyDayAdapter()
+                            hAdapter= EventListAdapter()
                             recyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL ,false)
                             recyclerView.adapter = hAdapter
                             hAdapter.setHistoryListItems(this@AllEventListActivity,
-                                response.body()!!.holidays as ArrayList<Holiday>
+                                response.body()!!.eventList as ArrayList<EventList>
                             )
                         }
                         else{
@@ -130,7 +133,7 @@ class AllEventListActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<HolydayResponse>, t: Throwable) {
+            override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 println("onFailure")
                 println(t.fillInStackTrace())
                 progressDialog.dismiss()

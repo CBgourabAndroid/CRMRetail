@@ -134,6 +134,46 @@ interface PostInterface {
 
         }
 
+        fun format_edatem(fdate: String): String {
+
+            // "Sun, 14 Aug\\n2019 5:30Am"
+
+            var datetime: String? = null
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy")
+            val d = SimpleDateFormat("MMM")
+            try {
+                val convertedDate = inputFormat.parse(fdate)
+                datetime = d.format(convertedDate!!)
+
+            } catch (e: ParseException) {
+
+            }
+
+            return datetime!!
+
+
+        }
+
+        fun format_edated(fdate: String): String {
+
+            // "Sun, 14 Aug\\n2019 5:30Am"
+
+            var datetime: String? = null
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy")
+            val d = SimpleDateFormat("dd")
+            try {
+                val convertedDate = inputFormat.parse(fdate)
+                datetime = d.format(convertedDate!!)
+
+            } catch (e: ParseException) {
+
+            }
+
+            return datetime!!
+
+
+        }
+
         fun getCalculatedDate(dateFormat: String?, days: Int): String? {
             val cal: Calendar = Calendar.getInstance()
             val s = SimpleDateFormat(dateFormat)
@@ -330,6 +370,13 @@ interface PostInterface {
                    @Field("lati") lati: String,
                    @Field("longi") longi: String): Call<GeneralResponce2>
 
+
+    @FormUrlEncoded
+    @POST("event-list")
+    fun getEventList(
+        @Header("Authorization") token: String,
+        @Field("user_id") user_id: String
+    ): Call<EventListResponse>
 
 
 

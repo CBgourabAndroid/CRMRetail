@@ -101,6 +101,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity android:name=".activity.AllEventListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+
+
+
         <activity android:name=".activity.Expenses"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
