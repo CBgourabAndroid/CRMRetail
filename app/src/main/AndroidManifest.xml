@@ -205,6 +205,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity android:name=".activity.AllPlaceOrder"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+
+
         <activity android:name=".activity.OutStanding"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

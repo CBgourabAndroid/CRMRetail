@@ -1,5 +1,6 @@
 package com.crmretail.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -47,7 +48,7 @@ class PlaceOrderActivity: AppCompatActivity(),ConnectivityReceiver.ConnectivityR
         getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
         toolbar.setNavigationOnClickListener {
 
-            finish()
+            onBackPressed()
         }
 
         psh= UserShared(this)
@@ -79,8 +80,18 @@ class PlaceOrderActivity: AppCompatActivity(),ConnectivityReceiver.ConnectivityR
             Toast.makeText(this,str,Toast.LENGTH_LONG).show()*/
         }
 
-        checkConnection()
+        //checkConnection()
     }
+
+    override fun onBackPressed() {
+
+        val intent = Intent()
+        intent.putExtra("isOk", "ok")
+        setResult(123, intent)
+        finish()
+    }
+
+
     private fun checkConnection() {
         val isConnected = ConnectivityReceiver.isConnected()
         showSnack(isConnected)

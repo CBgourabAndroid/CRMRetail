@@ -170,7 +170,7 @@ class AreaAdapter ( var conetext: Context,var originalData:ArrayList<ZoneArray>)
                 if (txt.equals("take the order")){
 
 
-                    val i1 = Intent(conetext, PlaceOrderActivity::class.java)
+                    val i1 = Intent(conetext, AllPlaceOrder::class.java)
                     i1.putExtra("shopid",originalData!![position].customerId.toString())
                     i1.putExtra("shopName", originalData!!.get(position).customerName)
                     i1.putExtra("shopAddress", originalData!!.get(position).customerAddress)
