@@ -24,6 +24,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AllEventListActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ class AllEventListActivity : AppCompatActivity() {
     lateinit var psh: UserShared
     lateinit var toolbar: Toolbar
     lateinit var recyclerView: RecyclerView
+    lateinit var dataList:ArrayList<EventList>
     lateinit var hAdapter: EventListAdapter
 
 
@@ -99,6 +102,8 @@ class AllEventListActivity : AppCompatActivity() {
                     Log.i("onSuccess", avv.toString());
                     if (avv==200) {
 
+                        dataList= ArrayList()
+
 
                         // Toast.makeText(applicationContext, "Good", Toast.LENGTH_SHORT).show()
 
@@ -107,8 +112,12 @@ class AllEventListActivity : AppCompatActivity() {
                             hAdapter= EventListAdapter()
                             recyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL ,false)
                             recyclerView.adapter = hAdapter
+
+                            dataList=response.body()!!.eventList as ArrayList<EventList>
+                            Collections.reverse(dataList)
+
                             hAdapter.setHistoryListItems(this@AllEventListActivity,
-                                response.body()!!.eventList as ArrayList<EventList>
+                                dataList
                             )
                         }
                         else{

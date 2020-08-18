@@ -66,6 +66,14 @@ public class UserShared {
         return prefs.getString(context.getString(R.string.shared_visit_status), "gb");
     }
 
+    public String getEventSts() {
+        return prefs.getString(context.getString(R.string.shared_event_status), context.getString(R.string.shared_no_data));
+    }
+
+    public String getEventID() {
+        return prefs.getString(context.getString(R.string.shared_event_id), context.getString(R.string.shared_no_data));
+    }
+
 
     public String getAccessToken() {
         return prefs.getString(context.getString(R.string.shared_access_token), context.getString(R.string.shared_no_data));

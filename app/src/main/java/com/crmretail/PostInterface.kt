@@ -379,184 +379,29 @@ interface PostInterface {
     ): Call<EventListResponse>
 
 
-
-/*
+    @FormUrlEncoded
+    @POST("event-occurance")
+    fun startEvent(
+        @Header("Authorization") token: String,
+        @Field("event_id") event_id: String,
+        @Field("start_time") start_time: String,
+        @Field("start_lati") lati: String,
+        @Field("start_longi") longi: String,
+        @Field("occurance_type") duty_type: String
+    ): Call<GeneralResponce2>
 
     @FormUrlEncoded
-    @POST("registration_v2.php")
-    fun signUpCall(
-        @Field("emailid") emailid: String,
-        @Field("mobilenumber") mobilenumber: String,
-        @Field("userpassword") userpassword: String,
-        @Field("username") username: String,
-        @Field("familyname")familyname:String,
-        @Field("dob")dob:String,
-        @Field("gender") gender: String
-    ): Call<SignUpResponce>
+    @POST("event-occurance")
+    fun endEvent(
+        @Header("Authorization") token: String,
+        @Field("event_id") event_id: String,
+        @Field("end_time") start_time: String,
+        @Field("end_lati") lati: String,
+        @Field("end_longi") longi: String,
+        @Field("occurance_type") duty_type: String,
+        @Field("remarks") remarks: String
 
-    @GET("forgetpassword.php?")
-    fun forgotPass( @Query("emailid") emailid: String): Call<SignUpResponce>
-
-    @FormUrlEncoded
-    @POST("loginauth_v2.php")
-    fun getOTP( @Field("otp") otp: String): Call<AuthResponce>
-
-
-    @GET("speciality_v2.php")
-    fun getSpeciality(): Call<SpecialityResponce>
-
-    @FormUrlEncoded
-    @POST("physician_speciality_v2.php")
-    fun GetSpecialitycode(
-        @Field("specialitycode") specialitycode: String
-
-    ): Call<DoctorResponce>
-*/
-
-
-
-/*
-
-
-
-
-    @FormUrlEncoded
-    @POST("password_recovery")
-    fun forgotCall(
-        @Field("email") email: String
-
-    ): Call<ForgotResponce>
-
-
-
-    @Multipart
-    @POST("verification_file_upload")
-    fun uploadImage(@Part("userfile") file1: RequestBody,
-                    @Part("user_id") user_id: String,
-                    @Part("userfile2") file2:RequestBody
-    ): Call<ImageResponce>
-
-
-    @Multipart
-    @POST("verification_file_upload")
-    fun uploadFile(
-        @Part file1: MultipartBody.Part,
-        @Part file2: MultipartBody.Part,
-        @Part("user_id") user_id: String
-    ): Call<ValidationResponce>
-
-    @Multipart
-    @POST("retro_upload")
-    fun uploadMulFile(
-        @Part file1: MultipartBody.Part
-       // @Part file2: MultipartBody.Part,
-       // @Part("user_id") user_id: String
-    ): Call<RetroTest>
-
-
-    @GET("get_all_cabs")
-    fun doGetListResources(): Call<SearchResponce>
-
-
-  //  @GET("get_all_cabs_new")
-   // fun GetListResources(): Call<CablistResponce>
-
-
-    @FormUrlEncoded
-    @POST("get_all_cabs_new")
-    fun GetListResources(
-        @Field("device_start_location")locationID: String
-    ): Call<CablistResponce>
-
-
-
-    @FormUrlEncoded
-    @POST("booking")
-    fun bookingCall(
-        @Field("user_id") userid: String,
-        @Field("bike_id") bid: String,
-        @Field("package_id") pid: String,
-        @Field("hour") hours: String,
-        @Field("payment_amount") pAmount: String,
-        @Field("start_date") sdate: String,
-        @Field("end_date") edate: String,
-        @Field("start_position") sloc: String,
-        @Field("end_position") eloc: String,
-        @Field("payment_status") pStatus: String,
-        @Field("payment_mode") pMode: String,
-        @Field("ride_status") rStatus: String,
-        @Field("start_location") startloc: String,
-        @Field("end_location") endloc: String
-
-    ): Call<BookingResponce>
-
-    @FormUrlEncoded
-    @POST("booking_history")
-    fun getBookingHistory(
-        @Field("user_id")userid: String
-    ): Call<BookingHistoryResponce>
-
-
-    @FormUrlEncoded
-    @POST("change_password")
-    fun getChangePass(
-        @Field("user_id")user_id: String,
-        @Field("old_password")oldpass: String,
-        @Field("new_password")newpass: String
-    ): Call<SignupResponce>
-
-
-    @FormUrlEncoded
-    @POST("checkuser")
-    fun getApproveStatus(
-        @Field("user_id")user_id: String
-    ): Call<ApproveResponce>
-
-
-
-
-
-
-    @FormUrlEncoded
-    @POST("insert_checklist")
-    fun getCheckList(
-        @Field("user_id")user_id: String,
-        @Field("booking_id")booking_id: String,
-        @Field("bike_id")bike_id: String,
-        @Field("odometer_reading")odometer_reading: String,
-        @Field("headlight")headlight: String,
-        @Field("instrument_console")instrument_console: String,
-        @Field("self_start")self_start: String,
-        @Field("number_plate")number_plate: String,
-        @Field("wiser")wiser: String,
-        @Field("mud_guard")mud_guard: String,
-        @Field("other_damage")other_damage: String,
-
-        @Field("left_panel")left_panel: String,
-        @Field("left_indicator_front")left_indicator_front: String,
-        @Field("left_indicator_back")left_indicator_back: String,
-        @Field("left_rear_view_mirror")left_rear_view_mirror: String,
-        @Field("damage_lrft_side")damage_lrft_side: String,
-
-        @Field("right_panel")right_panel: String,
-        @Field("right_indicator_front")right_indicator_front: String,
-        @Field("right_indicator_back")right_indicator_back: String,
-        @Field("right_rear_view_mirror")right_rear_view_mirror: String,
-        @Field("damage_right_side")damage_right_side: String,
-
-        @Field("tail_light")tail_light: String,
-        @Field("mud_guard_back")mud_guard_back: String,
-        @Field("number_plate_back")number_plate_back: String,
-        @Field("backside_damage")backside_damage: String,
-        @Field("other_bike_issues")other_bike_issues: String
-    ): Call<SignupResponce>
-
-
-
-
-    @GET("get_all_pickup_and_drop_location")
-    fun getAllLocation(): Call<LocationResponce>
-*/
+    ): Call<GeneralResponce2>
 
 
 

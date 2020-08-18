@@ -47,6 +47,10 @@
 
     <string name="shared_visit_status">visitstatus</string>
 
+    <string name="shared_event_status">eventstatus</string>
+    <string name="shared_event_id">eventid</string>
+
+
     <string name="areaData">areaData</string>
     <string name="customerinfo">customerinfo</string>
     <string name="customerinfo81">customerinfo81</string>
