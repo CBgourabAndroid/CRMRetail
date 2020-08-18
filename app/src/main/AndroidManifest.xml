@@ -78,6 +78,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
 
+
+
+        <activity android:name=".activity.LeaveApplication"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity android:name=".activity.LeaveApplicationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
@@ -102,6 +110,11 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity android:name=".activity.AllEventListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity android:name=".activity.EventImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />

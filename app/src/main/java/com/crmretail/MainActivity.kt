@@ -146,7 +146,7 @@ open class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSe
 
             R.id.nav_leave->{
 
-                val i1 = Intent(this@MainActivity, LeaveApplicationActivity::class.java)
+                val i1 = Intent(this@MainActivity, LeaveApplication::class.java)
                 startActivity(i1)
 
 

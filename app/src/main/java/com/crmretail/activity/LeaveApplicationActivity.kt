@@ -3,6 +3,7 @@ package com.crmretail.activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -91,6 +92,14 @@ class LeaveApplicationActivity: AppCompatActivity() {
         currentDateEnd=""
 
         inti()
+    }
+
+    override fun onBackPressed() {
+
+        val intent = Intent()
+        intent.putExtra("isOk", "")
+        setResult(123, intent)
+        finish()
     }
 
     private fun inti() {
@@ -305,7 +314,10 @@ class LeaveApplicationActivity: AppCompatActivity() {
 
 
                          Toast.makeText(applicationContext, response.body()!!.message, Toast.LENGTH_LONG).show()
-                        finish()
+                         val intent = Intent()
+                         intent.putExtra("isOk", "ok")
+                         setResult(123, intent)
+                         finish()
 
 
                     } else {

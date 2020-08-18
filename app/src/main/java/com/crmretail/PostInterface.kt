@@ -403,6 +403,13 @@ interface PostInterface {
 
     ): Call<GeneralResponce2>
 
+    @FormUrlEncoded
+    @POST("leave-list")
+    fun getLeaveList(
+        @Header("Authorization") token: String,
+        @Field("user_id") user_id: String
+    ): Call<LeaveListResponse>
+
 
 
 

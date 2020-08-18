@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.crmretail.SplashScreen
+import com.crmretail.activity.EventImageActivity
+import com.crmretail.activity.PrivateTransActivity
 import com.crmretail.modelClass.EventList
 import com.crmretail.modelClass.GeneralResponce
 import com.crmretail.modelClass.GeneralResponce2
@@ -209,6 +211,14 @@ class EventListAdapter  : RecyclerView.Adapter<EventListAdapter.MyViewHolder>(){
         })
 
         event_Title.setText(dataList[listPosition].eventType)
+
+        add_event_pic.setOnClickListener {
+
+            val intent = Intent(context, EventImageActivity::class.java)
+            intent.putExtra("eventid",dataList[listPosition].eventId.toString())
+            context.startActivity(intent)
+            alertDialog!!.dismiss()
+        }
 
         end_event.setOnClickListener {
 
