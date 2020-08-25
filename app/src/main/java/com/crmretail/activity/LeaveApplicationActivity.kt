@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -18,19 +19,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
-import com.crmretail.adapter.HolyDayAdapter
-import com.crmretail.modelClass.GeneralResponce
 import com.crmretail.modelClass.GeneralResponce2
-import com.crmretail.modelClass.Holiday
-import com.crmretail.modelClass.HolydayResponse
+import com.crmretail.nointernet.NILeaveModel
+import com.crmretail.nointernet.NIShared
 import com.crmretail.shared.UserShared
 import com.crmretail.utils.ConnectivityReceiver
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +36,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -65,7 +64,9 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
     lateinit var psh:UserShared
 
     var INC=0
-
+    lateinit var NIdataList:ArrayList<NILeaveModel>
+    lateinit var pshNI:NIShared
+    lateinit var prefs: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +92,8 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
 
         progressDialog= ProgressDialog(this)
         psh=UserShared(this)
-
+        pshNI= NIShared(this)
+        prefs = getSharedPreferences("MY_SHARED_PREF_GB", Context.MODE_PRIVATE)
 
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         currentDate = sdf.format(Date())
@@ -254,7 +256,7 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
                 }
                 else{
 
-                    saveFData()
+                    saveFData(currentDateStart,currentDateEnd,reson)
 
 
                 }
@@ -344,8 +346,23 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
     }
 
 
-    private fun saveFData() {
+    private fun saveFData(
+        currentDateStart: String,
+        currentDateEnd: String,
+        reson: String
+    ) {
 
+        val model=NILeaveModel()
+        model.startdate=currentDateStart
+        model.enddate=currentDateEnd
+        model.reason=reson
+        NIdataList!!.add(model)
+
+        val gson = Gson()
+        val json =gson.toJson(NIdataList!!)
+        val editor = prefs.edit()
+        editor.putString("LeaveApplication",json)
+        editor.commit()
 
 
     }
