@@ -441,7 +441,7 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
         NIdataList=gson.fromJson(json,turnsType)
         //setdata()
 
-        calltheApiNow()
+     //   calltheApiNow()
 
 
     }
