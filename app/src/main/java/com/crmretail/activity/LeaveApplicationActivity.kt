@@ -29,6 +29,7 @@ import com.crmretail.shared.UserShared
 import com.crmretail.utils.ConnectivityReceiver
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -169,6 +170,11 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
             message = "Good! Connected to Internet"
             color = Color.WHITE
             INC=1
+            if (!pshNI.laList.equals("")){
+
+
+                callNIDATALIST()
+            }
         } else {
             message = "Sorry! Not connected to internet"
             color = Color.RED
@@ -182,6 +188,8 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
         textView.setTextColor(color)
         snackbar.show()
     }
+
+
 
     override fun onResume() {
         super.onResume()
@@ -421,6 +429,26 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
                 progressDialog.dismiss()
             }
         })
+    }
+
+
+
+
+    fun callNIDATALIST(){
+        val gson = Gson()
+        val json =pshNI.laList
+        val turnsType = object : TypeToken<java.util.ArrayList<NILeaveModel>>() {}.type
+        NIdataList=gson.fromJson(json,turnsType)
+        //setdata()
+
+        calltheApiNow()
+
+
+    }
+
+    private fun calltheApiNow() {
+
+
     }
 
 }
