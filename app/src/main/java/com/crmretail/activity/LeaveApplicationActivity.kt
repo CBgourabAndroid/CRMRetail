@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.crmretail.adapter.HolyDayAdapter
@@ -26,6 +28,8 @@ import com.crmretail.modelClass.GeneralResponce2
 import com.crmretail.modelClass.Holiday
 import com.crmretail.modelClass.HolydayResponse
 import com.crmretail.shared.UserShared
+import com.crmretail.utils.ConnectivityReceiver
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeaveApplicationActivity: AppCompatActivity() {
+class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.ConnectivityReceiverListener {
 
     lateinit var currentDate:String
     lateinit var currentDateStart:String
@@ -59,6 +63,10 @@ class LeaveApplicationActivity: AppCompatActivity() {
     lateinit var toolbar: Toolbar
     lateinit var progressDialog : ProgressDialog
     lateinit var psh:UserShared
+
+    var INC=0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +100,9 @@ class LeaveApplicationActivity: AppCompatActivity() {
         currentDateEnd=""
 
         inti()
+        checkConnection()
     }
+
 
     override fun onBackPressed() {
 
@@ -145,6 +155,42 @@ class LeaveApplicationActivity: AppCompatActivity() {
 
     }
 
+    private fun checkConnection() {
+        val isConnected = ConnectivityReceiver.isConnected()
+        showSnack(isConnected)
+    }
+
+    private fun showSnack(isConnected: Boolean) {
+        val message: String
+        val color: Int
+        if (isConnected) {
+            message = "Good! Connected to Internet"
+            color = Color.WHITE
+            INC=1
+        } else {
+            message = "Sorry! Not connected to internet"
+            color = Color.RED
+            INC=2
+        }
+        val snackbar = Snackbar
+            .make(findViewById(R.id.coordinatorLayout), message, Snackbar.LENGTH_LONG)
+        val sbView = snackbar.view
+        val textView =
+            sbView.findViewById<View>(R.id.snackbar_text) as TextView
+        textView.setTextColor(color)
+        snackbar.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        AppController.getInstance().setConnectivityListener(this@LeaveApplicationActivity)
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        showSnack(isConnected)
+    }
+
     private fun validation() {
 
 
@@ -191,20 +237,30 @@ class LeaveApplicationActivity: AppCompatActivity() {
 
             if (PostInterface.checkDate(currentDateStart,currentDateEnd)) {
 
+                if (INC==1){
+                    if(!PostInterface.isConnected(this@LeaveApplicationActivity)){
 
-                if(!PostInterface.isConnected(this@LeaveApplicationActivity)){
+                        Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                    }
+                    else{
 
-                    Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                        progressDialog.setMessage("Please wait...")
+                        progressDialog.setCancelable(false)
+                        progressDialog.show()
+                        val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(reasionEtd.windowToken, 0)
+                        callDataList()
+                    }
                 }
                 else{
 
-                    progressDialog.setMessage("Please wait...")
-                    progressDialog.setCancelable(false)
-                    progressDialog.show()
-                    val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(reasionEtd.windowToken, 0)
-                     callDataList()
+                    saveFData()
+
+
                 }
+
+
+
 
             } else { // setdate_tv.setText(MyApplication.formatdate(dateClicked.toString()));
                 Toast.makeText(
@@ -220,6 +276,7 @@ class LeaveApplicationActivity: AppCompatActivity() {
         }
 
     }
+
 
     private fun showToastLong(message: String) {
 
@@ -282,6 +339,13 @@ class LeaveApplicationActivity: AppCompatActivity() {
         )
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
+
+
+    }
+
+
+    private fun saveFData() {
+
 
 
     }
