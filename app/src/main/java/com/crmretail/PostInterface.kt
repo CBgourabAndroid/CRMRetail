@@ -24,7 +24,7 @@ interface PostInterface {
 
     companion object {
         //const val BaseURL = "http://api.shakambharigroup.in/api/v1/"
-        const val BaseURL = "http://14.99.107.86:8001/api/v1"
+        const val BaseURL = "http://14.99.107.86:8001/api/v1/"
 
 
         fun isConnected(context: Context): Boolean {
