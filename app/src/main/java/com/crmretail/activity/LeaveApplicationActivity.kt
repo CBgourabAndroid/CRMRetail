@@ -441,14 +441,68 @@ class LeaveApplicationActivity: AppCompatActivity(),ConnectivityReceiver.Connect
         NIdataList=gson.fromJson(json,turnsType)
         //setdata()
 
+        for (i in 0 until NIdataList.size) {
+
+          //  calltheApiNow(NIdataList[i].startdate,NIdataList[i].enddate,NIdataList[i].reason)
+
+        }
+
      //   calltheApiNow()
 
 
     }
 
-    private fun calltheApiNow() {
+    private fun calltheApiNow(
+        startdate: String,
+        enddate: String,
+        reason: String
+    ) {
+
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(PostInterface.BaseURL)
+            .build()
+
+        val userAPI = retrofit.create(PostInterface::class.java!!)
+
+        userAPI.applyLeave("Bearer "+psh.accessToken,psh.id,startdate,enddate,reason).enqueue(object :
+            Callback<GeneralResponce2> {
+            override fun onResponse(call: Call<GeneralResponce2>, response: Response<GeneralResponce2>) {
+                println("onResponse")
+                System.out.println(response.toString())
+
+                if (response.code()==200){
+                    progressDialog.dismiss()
+
+                    val statusCode = response.code()
+                    val avv = response.body()!!.status
+                    Log.i("onSuccess", avv.toString());
+                    if (avv==200) {
 
 
+                      
+
+
+                    } else {
+                        Toast.makeText(applicationContext, response.body()!!.message, Toast.LENGTH_LONG).show()
+                        // Toast.makeText(applicationContext, response.body()!!.message, Toast.LENGTH_SHORT).show()
+                        progressDialog.dismiss()
+                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                else{
+                    progressDialog.dismiss()
+                    Toast.makeText(applicationContext, "Fail!!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<GeneralResponce2>, t: Throwable) {
+                println("onFailure")
+                println(t.fillInStackTrace())
+                progressDialog.dismiss()
+            }
+        })
     }
 
 }
