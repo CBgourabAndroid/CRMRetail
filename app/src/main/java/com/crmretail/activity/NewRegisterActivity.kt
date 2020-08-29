@@ -528,6 +528,7 @@ class NewRegisterActivity : AppCompatActivity() {
                         progressDialog!!.cancel()
                         //  showToastLong("Successfully Updated")
                         showToastLong(msg)
+                        startActivity(Intent(this@NewRegisterActivity, HomeActivity::class.java))
                         finish()
 
 

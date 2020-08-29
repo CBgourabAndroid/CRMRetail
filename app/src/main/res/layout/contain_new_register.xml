@@ -391,7 +391,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:singleLine="true"
-                                android:inputType="number"
+                                android:inputType="text"
                                 android:background="#00000000"
                                 android:hint="Enter your block number " />
 

@@ -308,6 +308,7 @@ class SplashScreen : AppCompatActivity() {
     private fun requestLocationPermission() {
         val foreground = ActivityCompat.checkSelfPermission(
             this,
+
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) === PackageManager.PERMISSION_GRANTED
         if (foreground) {
