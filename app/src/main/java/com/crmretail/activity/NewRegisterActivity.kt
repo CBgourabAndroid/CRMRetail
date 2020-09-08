@@ -337,7 +337,7 @@ class NewRegisterActivity : AppCompatActivity() {
         }
 
         if (TextUtils.isEmpty(ownerName.text.toString())) {
-            message = "Please Enter Shop Owner Name"
+            message = "Please Enter Proprietor Name"
             focusView = ownerName
             cancel = true
             tempCond = false

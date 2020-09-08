@@ -53,7 +53,7 @@ class HomeActivity : MainActivity() {
     lateinit var categoryAdapter: MainCatAdapter
     var names= arrayOf("Visit"
         ,"Register",
-        "Brand Track","Event Management","Duty Planner","Stop Duty")
+        "Brand Track","Meeting Management","Duty Planner","Stop Duty")
 
     var images= arrayOf(R.drawable.visit
         ,R.drawable.register,

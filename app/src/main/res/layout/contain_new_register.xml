@@ -272,7 +272,7 @@
                         android:layout_marginLeft="18.7dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="18.9dp"
-                        android:text="* Owner's Name "
+                        android:text="* Proprietor Name "
                         android:textColor="@color/logoColorTwo"
                         android:textStyle="bold" />
 
@@ -317,7 +317,7 @@
                         android:layout_marginLeft="18.7dp"
                         android:layout_marginTop="19dp"
                         android:layout_marginRight="18.9dp"
-                        android:text="* Owner's Contact"
+                        android:text="* Proprietor Contact"
                         android:textColor="@color/logoColorTwo"
                         android:textStyle="bold" />
 
