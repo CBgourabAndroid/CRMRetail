@@ -159,6 +159,48 @@
                         android:layout_marginLeft="18.7dp"
                         android:layout_marginTop="19dp"
                         android:layout_marginRight="18.9dp"
+                        android:text="* Location/ Visibility"
+                        android:textColor="@color/logoColorTwo"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="18.9dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="1dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+
+                            <Spinner
+                                android:id="@+id/spinner_Visibility"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/visibilityType"/>
+
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginRight="18.9dp"
                         android:text="* Remarks"
                         android:textColor="@color/logoColorTwo"
                         android:textStyle="bold" />

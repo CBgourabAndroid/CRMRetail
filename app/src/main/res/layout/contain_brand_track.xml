@@ -117,7 +117,7 @@
                         android:layout_marginLeft="18.7dp"
                         android:layout_marginTop="19dp"
                         android:layout_marginRight="18.9dp"
-                        android:text="* Address"
+                        android:text="* Location"
                         android:textColor="@color/logoColorTwo"
                         android:textStyle="bold" />
 
@@ -169,7 +169,8 @@
                             android:layout_marginRight="18.9dp"
                             android:text="* Branding Rate(approx)"
                             android:textColor="@color/logoColorTwo"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -179,7 +180,8 @@
                             android:layout_marginRight="18.9dp"
                             app:cardBackgroundColor="@android:color/white"
                             app:cardCornerRadius="6dp"
-                            app:cardElevation="1dp">
+                            app:cardElevation="1dp"
+                            android:visibility="gone">
 
 
                             <LinearLayout
@@ -215,7 +217,8 @@
                             android:layout_marginRight="18.9dp"
                             android:text="* Brand Quantity(approx)"
                             android:textColor="@color/logoColorTwo"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -225,7 +228,8 @@
                             android:layout_marginRight="18.9dp"
                             app:cardBackgroundColor="@android:color/white"
                             app:cardCornerRadius="6dp"
-                            app:cardElevation="1dp">
+                            app:cardElevation="1dp"
+                            android:visibility="gone">
 
 
                             <LinearLayout
@@ -259,6 +263,7 @@
                             android:layout_marginTop="19dp"
                             android:layout_marginRight="18.9dp"
                             android:text="* Vendor"
+                            android:visibility="gone"
                             android:textColor="@color/logoColorTwo"
                             android:textStyle="bold" />
 
@@ -270,6 +275,7 @@
                             android:layout_marginRight="18.9dp"
                             app:cardBackgroundColor="@android:color/white"
                             app:cardCornerRadius="6dp"
+                            android:visibility="gone"
                             app:cardElevation="1dp">
 
 

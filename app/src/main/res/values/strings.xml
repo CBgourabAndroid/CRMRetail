@@ -95,7 +95,14 @@
 
     <string-array name="statusType">
         <item>Good</item>
-        <item>Bad</item>
+        <item>Damaged</item>
+    </string-array>
+
+    <string-array name="visibilityType">
+        <item>Long View</item>
+        <item>Short View</item>
+        <item>Not Visible</item>
+        <item>Improper Location</item>
     </string-array>
 
     <string-array name="situatedType">
@@ -112,14 +119,13 @@
 
     <string-array name="mediaType">
         <item>Banner</item>
-        <item>Hoarding</item>
         <item>Wall Painting</item>
         <item>GSB</item>
         <item>NLB</item>
         <item>Dealer Hoarding</item>
         <item>Gantry</item>
         <item>Pole Kisok</item>
-        <item>Wall Wrep</item>
+        <item>Wall Wrap</item>
         <item>Center</item>
         <item>Pop Items</item>
         <item>Others</item>
