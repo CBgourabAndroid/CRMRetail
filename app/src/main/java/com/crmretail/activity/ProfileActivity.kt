@@ -28,11 +28,13 @@ import com.crmretail.R
 import com.crmretail.modelClass.AreaInfo
 import com.crmretail.modelClass.PersonalInfo
 import com.crmretail.shared.UserShared
+import com.crmretail.utils.Utility
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.contain_profile.*
 import java.io.*
-import java.util.ArrayList
+import java.util.*
 
 class ProfileActivity : AppCompatActivity(){
 
@@ -46,7 +48,11 @@ class ProfileActivity : AppCompatActivity(){
 
     lateinit var datalist: ArrayList<PersonalInfo>
 
-
+    private var userChoosenTask: String? = null
+    private val REQUEST_CAMERA = 0
+    private val SELECT_FILE = 1
+    private val TAG: String? = null
+    private var picturepath: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +77,7 @@ class ProfileActivity : AppCompatActivity(){
 
 
         init()
-        //onclick()
+        onclick()
         //setdata()
 
         loadData()
@@ -129,15 +135,12 @@ class ProfileActivity : AppCompatActivity(){
 
 
 
-  /*  private fun onclick() {
-        profile_image.setOnClickListener {
+    private fun onclick() {
+        userImg.setOnClickListener {
             selectImage()
         }
-        security_layout.setOnClickListener {
 
-            startActivity(Intent(this@ProfileActivity, SecurityActivity ::class.java))
-        }
-    }*/
+    }
 
 
     override fun onBackPressed() {
@@ -147,15 +150,61 @@ class ProfileActivity : AppCompatActivity(){
 
 
 
+    private fun selectImage() {
+
+        val items = arrayOf<CharSequence>(
+            resources.getString(R.string.takephoto),
+            resources.getString(R.string.choosefromlib),
+            resources.getString(R.string.cancel)
+        )
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.addphoto))
+        builder.setItems(items) { dialog, item ->
+            val result = Utility.checkPermission(this)
+
+            if (items[item] == resources.getString(R.string.takephoto)) {
+                userChoosenTask = resources.getString(R.string.takephoto)
+                if (result)
+                    cameraIntent()
+
+            } else if (items[item] == resources.getString(R.string.choosefromlib)) {
+                userChoosenTask = resources.getString(R.string.choosefromlib)
+                if (result)
+                    galleryIntent()
+
+            } else if (items[item] == resources.getString(R.string.cancel)) {
+                dialog.dismiss()
+            }
+        }
+        builder.show()
 
 
+    }
 
-    /*override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    private fun galleryIntent() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE)
+
+
+    }
+
+    private fun cameraIntent() {
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CAMERA)
+
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (userChoosenTask == "Take Photo")
+                if (userChoosenTask == getString(R.string.takephoto))
                     cameraIntent()
-                else if (userChoosenTask == "Choose from Library")
+                else if (userChoosenTask == getString(R.string.choosefromlib))
                     galleryIntent()
             } else {
                 //code for deny
@@ -164,6 +213,7 @@ class ProfileActivity : AppCompatActivity(){
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         // super.onActivityResult(requestCode, resultCode, data);
 
         if (data != null) {
@@ -194,23 +244,30 @@ class ProfileActivity : AppCompatActivity(){
                 // user cancelled Image capture
                 Toast.makeText(
                     this,
-                    "User cancelled image capture", Toast.LENGTH_SHORT
+                    getString(R.string.Usercancelledimagecapture), Toast.LENGTH_SHORT
                 )
                     .show()
-            } else {
+            }
+
+
+            else {
 
                 // failed to capture image
                 Toast.makeText(
                     this,
-                    "Sorry! Failed to capture image", Toast.LENGTH_SHORT
+                    getString(R.string.SorryFailedtocaptureimage), Toast.LENGTH_SHORT
                 )
                     .show()
 
             }
-        } else {
+        }
+
+
+
+        else {
             Toast.makeText(
                 this,
-                "User cancelled image capture", Toast.LENGTH_SHORT
+                getString(R.string.Usercancelledimagecapture), Toast.LENGTH_SHORT
             )
                 .show()
         }
@@ -248,10 +305,10 @@ class ProfileActivity : AppCompatActivity(){
             e.printStackTrace()
         }
 
-       // profile_image.setImageBitmap(thumbnail)
+        // profile_image.setImageBitmap(thumbnail)
         // this.profileImage.setRotation(90);
 
-        *//*Glide.with(this)
+        /*Glide.with(this)
             .asBitmap()
             .load(thumbnail)
             .apply(RequestOptions().circleCrop())
@@ -266,17 +323,15 @@ class ProfileActivity : AppCompatActivity(){
                     // if you are referencing the bitmap somewhere else too other than this imageView
                     // clear it here as you can no longer have the bitmap
                 }
-            })*//*
+            })*/
 
         if (!TextUtils.isEmpty(picturepath.toString())) {
             Glide.with(this)
                 .load(picturepath)
                 .apply(RequestOptions().circleCrop())
-                .into(profile_image)
+                .into(userImg)
 
-            val editor = prefs.edit()
-            editor.putString(getString(R.string.shared_user_pic), picturepath.toString())
-            editor.commit()
+
 
         }
 
@@ -289,12 +344,9 @@ class ProfileActivity : AppCompatActivity(){
             Glide.with(this)
                 .load(picturepath)
                 .apply(RequestOptions().circleCrop())
-                .into(profile_image)
+                .into(userImg)
 
-            val editor = prefs.edit()
-            editor.putString(getString(R.string.shared_user_pic), picturepath.toString())
-            editor.commit()
 
         }
-    }*/
+    }
 }

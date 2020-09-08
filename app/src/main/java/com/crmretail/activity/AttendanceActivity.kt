@@ -344,15 +344,21 @@ class AttendanceActivity: AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         //set title for alert dialog
-        builder.setTitle("Absent")
+        builder.setTitle("Duty Date")
         //set message for alert dialog
-        builder.setMessage("You don't stop the duty that day!!!")
+        builder.setMessage(strDate)
         //builder.setIcon(android.R.drawable.ic_dialog_alert)
         builder.setPositiveButton("Ok"){dialogInterface, which ->
 
             dialogInterface.cancel()
 
             //Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        }
+        builder.setNegativeButton("View Details"){dialogInterface, which ->
+            dialogInterface.cancel()
+
+            viewDDetails()
+
         }
 
 
@@ -365,18 +371,45 @@ class AttendanceActivity: AppCompatActivity() {
 
     }
 
+    private fun viewDDetails() {
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle("Absent")
+        //set message for alert dialog
+        builder.setMessage("You don't stop the duty on that day!!")
+        //builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Ok"){dialogInterface, which ->
+
+            dialogInterface.cancel()
+
+            //Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        }
+
+
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
     private fun showMP(strDate: String, aa: String, bb: String, cc: String, dd: String) {
         val builder = AlertDialog.Builder(this)
         //set title for alert dialog
-        builder.setTitle(dd)
+        builder.setTitle("Duty Date")
         //set message for alert dialog
-        builder.setMessage("Duty Start : "+aa+"\nDuty End : "+bb+"\nDuty Time : "+cc+
-                "\nDate : "+strDate)
+        builder.setMessage(strDate)
         //builder.setIcon(android.R.drawable.ic_dialog_alert)
 //performing positive action
         builder.setPositiveButton("Ok"){dialogInterface, which ->
             dialogInterface.cancel()
             //Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        }
+        builder.setNegativeButton("View Details"){dialogInterface, which ->
+            dialogInterface.cancel()
+
+            viewDetails(aa,bb,cc,dd)
+
+
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -386,5 +419,28 @@ class AttendanceActivity: AppCompatActivity() {
 
 
 
+    }
+
+    private fun viewDetails(aa: String, bb: String, cc: String, dd: String) {
+
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle(dd)
+        //set message for alert dialog
+        builder.setMessage("Duty Start On  : "+aa+"\nDuty End At: "+bb+"\nTotal Working Hours : "+cc
+                )
+        //builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton("Ok"){dialogInterface, which ->
+
+            dialogInterface.cancel()
+
+            //Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        }
+
+
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 }

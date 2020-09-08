@@ -28,7 +28,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_event"
-            android:title="Event Proposal" />
+            android:title="Meeting Proposal" />
     </group>
     <group android:id="@+id/nav_open_nav_send"
         android:checkableBehavior="single">
@@ -54,7 +54,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_offDuty"
-            android:title="Off-Duty Order" />
+            android:title="Telephonic Order" />
     </group>
 
     <group android:id="@+id/nav_pjp"

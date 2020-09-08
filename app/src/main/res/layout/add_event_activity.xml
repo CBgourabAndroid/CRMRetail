@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Event Proposal"
+                        android:text="Meeting Proposal"
                         android:textColor="#ffffff"
                         android:textSize="20dp"/>
 

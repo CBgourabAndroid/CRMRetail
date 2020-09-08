@@ -210,7 +210,7 @@ class EventAddActivity : AppCompatActivity() {
         locationEtd.setOnClickListener {
 
 
-            if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
+            if (eventType.equals("Masson Meet")||eventType.equals("Engineer Meet")){
 
 
                 if(!PostInterface.isConnected(this@EventAddActivity)){
@@ -252,10 +252,10 @@ class EventAddActivity : AppCompatActivity() {
 
                     eventType=languages[position].toString()
 
-                    if (eventType.equals("Dealer/Distributer Meet")){
+                    if (eventType.equals("Dealer/Sub-dealer Meet")){
                         eventTypeID="1"
                     }
-                    else if(eventType.equals("Mason Meet")){
+                    else if(eventType.equals("Masson Meet")){
                         eventTypeID="2"
                     }
                     else if(eventType.equals("Engineer Meet")){
@@ -267,16 +267,16 @@ class EventAddActivity : AppCompatActivity() {
 
 
 
-                    if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
+                    if (eventType.equals("Masson Meet")||eventType.equals("Engineer Meet")){
 
-                        multiTxtH.setText("* Dealer/Distributor")
+                        multiTxtH.setText("* Dealer/Sub-dealer")
                         locationEtd.setText("")
-                        locationEtd.setHint("Enter dealer/distributor name")
+                        locationEtd.setHint("Enter  dealer/sub-dealer name")
                     }
                     else{
                         multiTxtH.setText("* Location")
                         locationEtd.setText("")
-                        locationEtd.setHint("Enter event location")
+                        locationEtd.setHint("Enter meeting location")
 
                     }
 
@@ -508,12 +508,12 @@ class EventAddActivity : AppCompatActivity() {
         var tempCond = false
 
         if (TextUtils.isEmpty(currentDateStart)) {
-            message = "Enter Event Date"
+            message = "Enter Meeting Date"
             focusView = eventDateTxt
             cancel = true
             tempCond = false
         }
-        if (TextUtils.isEmpty(startTime)) {
+      /*  if (TextUtils.isEmpty(startTime)) {
             message = "Enter Start Time"
             focusView = startTimeTxt
             cancel = true
@@ -524,9 +524,9 @@ class EventAddActivity : AppCompatActivity() {
             focusView = endTimeTxt
             cancel = true
             tempCond = false
-        }
+        }*/
 
-        if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
+        if (eventType.equals("Masson Meet")||eventType.equals("Engineer Meet")){
 
 
             if (TextUtils.isEmpty(reson)) {

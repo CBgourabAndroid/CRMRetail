@@ -14,7 +14,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        setProperty("archivesBaseName", "THERMOCON TMT")
+        setProperty("archivesBaseName", "THERMOCON MARCOM")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

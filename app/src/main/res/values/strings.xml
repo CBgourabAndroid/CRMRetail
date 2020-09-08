@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">THERMOCON TMT</string>
+    <string name="app_name">THERMOCON MARCOM</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -66,8 +66,8 @@
     <string name="btn_label_refresh">Refresh</string>
 
     <string-array name="eventType">
-        <item>Dealer/Distributer Meet</item>
-        <item>Mason Meet</item>
+        <item>Dealer/Sub-dealer Meet</item>
+        <item>Masson Meet</item>
         <item>Engineer Meet</item>
         <item>other</item>
     </string-array>
@@ -124,5 +124,13 @@
         <item>Pop Items</item>
         <item>Others</item>
     </string-array>
+
+    <string name="Proceed">Proceed</string>
+    <string name="takephoto">Take Photo</string>
+    <string name="choosefromlib">Choose from Library</string>
+    <string name="cancel">Cancel</string>
+    <string name="addphoto">Add Photo!</string>
+    <string name="Usercancelledimagecapture">User cancelled image capture</string>
+    <string name="SorryFailedtocaptureimage">Sorry! Failed to capture image</string>
 
 </resources>

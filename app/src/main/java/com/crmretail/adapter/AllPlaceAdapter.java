@@ -148,7 +148,7 @@ public class AllPlaceAdapter extends RecyclerView.Adapter<AllPlaceAdapter.ViewHo
                 abc.add(String.valueOf(items.get(adapterPosition).getZoneName()));
                // Toast.makeText(context, String.valueOf(xyz), Toast.LENGTH_SHORT).show();
                 locationTxt.setText(abc.toString().substring(1, abc.toString().length()-1));
-
+                popupWindow.dismiss();
             }
             else  {
                 mCheckedTextView.setChecked(false);
