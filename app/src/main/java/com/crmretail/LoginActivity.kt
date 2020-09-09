@@ -263,7 +263,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
 
         if (TextUtils.isEmpty(PasswordStr)) {
-            message = "Please Enter Your Password"
+            message = "Please enter your password"
             focusView = edt_pass
             cancel = true
             tempCond = false
@@ -377,6 +377,11 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
                         val gsonper = Gson()
                         val profleData: String = gsonper.toJson(response.body()!!.personalInfo)
                         editor.putString(getString(R.string.personallist),profleData)
+
+
+                        val gsonpers = Gson()
+                        val checklistData: String = gsonpers.toJson(response.body()!!.checkList)
+                        editor.putString(getString(R.string.checklist),checklistData)
 
 
                       //  val customer_Info_8: String = gson.toJson(response.body()!!.customerInfo.get8())

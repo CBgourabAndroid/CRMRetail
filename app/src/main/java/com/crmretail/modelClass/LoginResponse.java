@@ -37,6 +37,9 @@ public class LoginResponse {
     @SerializedName("product_info")
     @Expose
     private List<ProductInfo> productInfo = null;
+    @SerializedName("check_list")
+    @Expose
+    private List<CheckList> checkList = null;
 
     public String getAccessToken() {
         return accessToken;
@@ -116,6 +119,14 @@ public class LoginResponse {
 
     public void setProductInfo(List<ProductInfo> productInfo) {
         this.productInfo = productInfo;
+    }
+
+    public List<CheckList> getCheckList() {
+        return checkList;
+    }
+
+    public void setCheckList(List<CheckList> checkList) {
+        this.checkList = checkList;
     }
 
 }

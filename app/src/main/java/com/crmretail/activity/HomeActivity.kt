@@ -23,21 +23,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.MainActivity
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.crmretail.SplashScreen
+import com.crmretail.adapter.CheckListAdapter
 import com.crmretail.adapter.MainCatAdapter
+import com.crmretail.modelClass.CheckList
 import com.crmretail.modelClass.GeneralResponce
+import com.crmretail.modelClass.ProductInfo
 import com.crmretail.shared.Updatedlatlong
 import com.crmretail.shared.UserShared
 import com.google.android.gms.location.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.my_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +49,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeActivity : MainActivity() {
@@ -65,6 +70,8 @@ class HomeActivity : MainActivity() {
     lateinit var  prefs: SharedPreferences
     private var LATSTR=""
     private var LONGSTR=""
+    lateinit var adapter:CheckListAdapter
+    lateinit var dataList:ArrayList<CheckList>
 
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -90,7 +97,8 @@ class HomeActivity : MainActivity() {
         categoryAdapter.setDataListItems(this@HomeActivity,
             names,images
         )
-
+        dataList=ArrayList()
+        loadData()
 
         if (psh.dutyStatus){
 
@@ -120,6 +128,15 @@ class HomeActivity : MainActivity() {
 
     }
 
+    fun loadData(){
+        val gson = Gson()
+        val json =psh.checkList
+        val turnsType = object : TypeToken<ArrayList<CheckList>>() {}.type
+        dataList=gson.fromJson(json,turnsType)
+
+
+    }
+
     private fun showDialogS(latstr: String, longstr: String) {
 
         val viewGroup =findViewById<ViewGroup>(android.R.id.content)
@@ -134,8 +151,18 @@ class HomeActivity : MainActivity() {
         val addprivate=dialogView.findViewById<TextView>(R.id.addPrivateDetails)
         val txt_tv=dialogView.findViewById<TextView>(R.id.sbd_text_title)
         val radGrp=dialogView.findViewById<RadioGroup>(R.id.rbgrp)
+        val recycler_view: RecyclerView =
+            dialogView.findViewById(R.id.my_recycler_view) as RecyclerView
         val alert = dialogBuilder.create()
         alert.show()
+
+
+        recycler_view.setLayoutManager(GridLayoutManager(this, 2))
+        recycler_view.setItemAnimator(DefaultItemAnimator())
+
+        adapter = CheckListAdapter(this, dataList
+        )
+        recycler_view.setAdapter(adapter)
 
         txt_tv.setText(currentDate)
         getLastLocation()
@@ -162,34 +189,41 @@ class HomeActivity : MainActivity() {
 
         addprivate.setOnClickListener {
 
-            val intent = Intent(this@HomeActivity, PrivateTransActivity::class.java)
-            startActivityForResult(intent, 123)
-            alert.dismiss()
+            if (CheckListAdapter.xyz.size != 0) {
+                //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
+                val intent = Intent(this@HomeActivity, PrivateTransActivity::class.java)
+                startActivityForResult(intent, 123)
+                alert.dismiss()
+            } else {
+                Toast.makeText(this,"Please provide checklist details!!",Toast.LENGTH_SHORT).show()
+            }
         }
 
         homeClick.setOnClickListener {
 
          //   start_duty.visibility=View.GONE
 
+            if (CheckListAdapter.xyz.size != 0) {
+                //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
+                if(!PostInterface.isConnected(applicationContext)){
 
-            if(!PostInterface.isConnected(applicationContext)){
+                    Toast.makeText(applicationContext, applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                }
+                else{
 
-                Toast.makeText(applicationContext, applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                    progressDialog.setMessage("Please wait ...")
+                    progressDialog.setCancelable(false)
+                    progressDialog.show()
+                    callStartDuty()
+
+                }
+                alert.dismiss()
+            } else {
+                Toast.makeText(this,"Please provide checklist details!!",Toast.LENGTH_SHORT).show()
             }
-            else{
-
-                progressDialog.setMessage("Please wait ...")
-                progressDialog.setCancelable(false)
-                progressDialog.show()
-                callStartDuty()
-
-
-            }
 
 
 
-
-            alert.dismiss()
            // startActivity(Intent(this@BookAppointment, HomeActivity::class.java))
           //  finish()
         }

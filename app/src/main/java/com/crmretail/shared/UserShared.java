@@ -51,6 +51,10 @@ public class UserShared {
         return prefs.getString(context.getString(R.string.personallist), context.getString(R.string.shared_no_data));
     }
 
+    public String getCheckList() {
+        return prefs.getString(context.getString(R.string.checklist), context.getString(R.string.shared_no_data));
+    }
+
     public String getAreaList() {
         return prefs.getString(context.getString(R.string.arealist), context.getString(R.string.shared_no_data));
     }

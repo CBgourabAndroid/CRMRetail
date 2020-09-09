@@ -40,6 +40,7 @@
 
 
     <string name="personallist">personallist</string>
+    <string name="checklist">checklist</string>
     <string name="arealist">arealist</string>
     <string name="customerlist">customerlist</string>
     <string name="productlist">productlist</string>
