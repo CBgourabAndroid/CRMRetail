@@ -9,10 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.PostInterface
@@ -266,10 +263,11 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
         val txt_tv = view.findViewById<TextView>(R.id.sbd_text_title)
         val temImg = view.findViewById<ImageView>(R.id.sbd_view_animation)
         val radGrp = view.findViewById<RadioGroup>(R.id.rbgrp)
+        val rbgLayout=view.findViewById<LinearLayout>(R.id.rgb_lay)
         builder.setView(view)
 
-        txt_tv.setText("Do you want to Stop Duty?")
-        temImg.visibility = View.GONE
+
+
 
 
 
@@ -278,28 +276,23 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
         ) { dialog, which -> dialog.dismiss() }*/
             val alertDialog = builder.create()
             alertDialog.show()
+        temImg.visibility = View.GONE
+        radGrp.visibility=View.GONE
+        rbgLayout.visibility=View.GONE
+
+        if (psh.dutyType.equals("Public")){
+            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Use Public Transport For Today!!\n\n\n")
+            homeClick.visibility = View.VISIBLE
+            homeClick.setText("Stop Duty")
+        }
+        else{
+            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Use Private Transport For Today!!\n\n\n")
+            addprivate.visibility = View.VISIBLE
+            addprivate.setText("Add Details")
+
+        }
 
 
-        radGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(arg0: RadioGroup?, id: Int) {
-                when (id) {
-                    R.id.radioButton -> {
-                        addprivate.visibility = View.GONE
-                        homeClick.visibility = View.VISIBLE
-                        homeClick.setText("Stop Duty")
-
-
-                    }
-                    R.id.radioButton2 -> {
-
-                        addprivate.visibility = View.VISIBLE
-                        homeClick.visibility = View.GONE
-                        homeClick.setText("Stop Duty")
-
-                    }
-                }
-            }
-        })
 
         addprivate.setOnClickListener {
 

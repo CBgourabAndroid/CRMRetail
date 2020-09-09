@@ -88,6 +88,10 @@ public class UserShared {
 
     }
 
+    public String getDutyType() {
+        return prefs.getString(context.getString(R.string.shared_duty_type), context.getString(R.string.shared_no_data));
+    }
+
     public String getAreaData() {
         return prefs.getString(context.getString(R.string.areaData), context.getString(R.string.shared_no_data));
     }

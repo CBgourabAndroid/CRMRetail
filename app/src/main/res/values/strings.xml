@@ -45,6 +45,7 @@
     <string name="customerlist">customerlist</string>
     <string name="productlist">productlist</string>
     <string name="shared_duty_status">dutystatus</string>
+    <string name="shared_duty_type">dutytype</string>
 
     <string name="shared_visit_status">visitstatus</string>
 

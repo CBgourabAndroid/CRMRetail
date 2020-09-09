@@ -50,9 +50,11 @@
 
 
         <LinearLayout
+            android:id="@+id/checkListLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
@@ -74,6 +76,7 @@
 
 
         <LinearLayout
+            android:id="@+id/rgb_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -84,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transport Details"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="15sp"
                 android:textStyle="bold"

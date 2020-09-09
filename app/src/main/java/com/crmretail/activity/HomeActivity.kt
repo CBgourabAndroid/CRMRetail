@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -97,8 +98,7 @@ class HomeActivity : MainActivity() {
         categoryAdapter.setDataListItems(this@HomeActivity,
             names,images
         )
-        dataList=ArrayList()
-        loadData()
+
 
         if (psh.dutyStatus){
 
@@ -151,12 +151,16 @@ class HomeActivity : MainActivity() {
         val addprivate=dialogView.findViewById<TextView>(R.id.addPrivateDetails)
         val txt_tv=dialogView.findViewById<TextView>(R.id.sbd_text_title)
         val radGrp=dialogView.findViewById<RadioGroup>(R.id.rbgrp)
+        val checkListLayout=dialogView.findViewById<LinearLayout>(R.id.checkListLay)
+
         val recycler_view: RecyclerView =
             dialogView.findViewById(R.id.my_recycler_view) as RecyclerView
         val alert = dialogBuilder.create()
         alert.show()
+        dataList=ArrayList()
+        loadData()
 
-
+        checkListLayout.visibility=View.VISIBLE
         recycler_view.setLayoutManager(GridLayoutManager(this, 2))
         recycler_view.setItemAnimator(DefaultItemAnimator())
 
@@ -214,7 +218,7 @@ class HomeActivity : MainActivity() {
                     progressDialog.setMessage("Please wait ...")
                     progressDialog.setCancelable(false)
                     progressDialog.show()
-                    callStartDuty()
+                    callStartDuty("Public")
 
                 }
                 alert.dismiss()
@@ -295,7 +299,7 @@ class HomeActivity : MainActivity() {
     }*/
 
 
-    private fun callStartDuty() {
+    private fun callStartDuty( dutyType:String) {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
 
@@ -326,6 +330,7 @@ class HomeActivity : MainActivity() {
 
                         val editor = prefss.edit()
                         editor.putBoolean(getString(R.string.shared_duty_status), true)
+                        editor.putString(getString(R.string.shared_duty_type), dutyType)
                         editor.commit()
                         val nav_Menu: Menu = navView.getMenu()
                         nav_Menu.findItem(R.id.nav_logout).setVisible(false)
@@ -478,7 +483,7 @@ class HomeActivity : MainActivity() {
                     progressDialog.setMessage("Please wait ...")
                     progressDialog.setCancelable(false)
                     progressDialog.show()
-                    callStartDuty()
+                    callStartDuty("Private")
 
 
                 }
