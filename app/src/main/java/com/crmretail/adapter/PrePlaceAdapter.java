@@ -85,6 +85,7 @@ public class PrePlaceAdapter extends RecyclerView.Adapter<PrePlaceAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             mCheckedTextView = (CheckedTextView) itemView.findViewById(R.id.checked_text_view);
+            mCheckedTextView.setVisibility(View.VISIBLE);
             name=itemView.findViewById(R.id.name);
 
 

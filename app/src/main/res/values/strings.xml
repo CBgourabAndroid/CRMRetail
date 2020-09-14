@@ -74,6 +74,12 @@
         <item>other</item>
     </string-array>
 
+    <string-array name="foodType">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+
     <string-array name="travelType">
         <item>Private</item>
         <item>Public</item>

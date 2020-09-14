@@ -58,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:background="@drawable/rect"
-                            android:padding="12dp">
+                            android:padding="10dp">
 
                             <Spinner
                                 android:id="@+id/spinner"

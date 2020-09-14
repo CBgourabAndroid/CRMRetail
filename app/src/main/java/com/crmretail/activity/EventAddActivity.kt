@@ -74,6 +74,8 @@ class EventAddActivity : AppCompatActivity() {
     lateinit var endTimeTxt:EditText
     lateinit var applyLeave: TextView
     lateinit var locationEtd: EditText
+    lateinit var budgetEdt:EditText
+    lateinit var no_of_people:EditText
 
     var calendar = Calendar.getInstance()
     var year = calendar.get(Calendar.YEAR)
@@ -175,6 +177,8 @@ class EventAddActivity : AppCompatActivity() {
         applyLeave = findViewById(R.id.apply_leave)
         locationEtd = findViewById(R.id.leave_reasion)
         endTimeTxt=findViewById(R.id.end_time_txt)
+        no_of_people=findViewById(R.id.event_no_of_heads)
+        budgetEdt=findViewById(R.id.event_budget_txt)
 
 
         //  fromDateTxt.setText(PostInterface.format_date2(currentDateStart))
@@ -578,8 +582,11 @@ class EventAddActivity : AppCompatActivity() {
                 reqEntity!!.addPart("user_id", StringBody(psh.id))
                 reqEntity!!.addPart("event_type", StringBody(eventTypeID))
                 reqEntity!!.addPart("event_date", StringBody(currentDateStart))
-                reqEntity!!.addPart("start_time", StringBody(startTime))
-                reqEntity!!.addPart("end_time", StringBody(endTime))
+               // reqEntity!!.addPart("start_time", StringBody(startTime))
+               // reqEntity!!.addPart("end_time", StringBody(endTime))
+
+                reqEntity!!.addPart("noa", StringBody(no_of_people.text.toString()))
+                reqEntity!!.addPart("budget", StringBody(budgetEdt.text.toString()))
 
 
                 if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){

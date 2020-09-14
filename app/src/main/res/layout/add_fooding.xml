@@ -157,12 +157,20 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/foodTypeName"
+                                    android:visibility="gone"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Expense Type"
                                     android:background="@android:color/transparent"
                                     android:inputType="text"/>
                             </com.google.android.material.textfield.TextInputLayout>
+
+                            <Spinner
+                                android:visibility="gone"
+                                android:id="@+id/spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/foodType"/>
 
 
 

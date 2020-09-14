@@ -19,9 +19,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -29,6 +27,7 @@ import androidx.core.content.FileProvider
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.contain_add_event.*
 import java.io.*
 
 
@@ -94,7 +93,7 @@ class AddFoodingDetails : AppCompatActivity() {
         foodName=findViewById(R.id.foodTypeName)
         foodPrice=findViewById(R.id.foodTypePrice)
         saveData=findViewById(R.id.savetxt)
-
+        val spinner = findViewById<Spinner>(R.id.spinner)
         take_Pic.setOnClickListener {
 
             //verifyStoragePermissions(this)
@@ -106,6 +105,41 @@ class AddFoodingDetails : AppCompatActivity() {
 
 
             validation()
+        }
+
+        if (intent.getStringExtra("from").equals("lodging")){
+            spinner.visibility=View.GONE
+            foodName.visibility=View.VISIBLE
+        }
+        else{
+            spinner.visibility=View.VISIBLE
+            foodName.visibility=View.GONE
+        }
+
+
+        val languages = resources.getStringArray(R.array.foodType)
+        if (spinner != null) {
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item, languages
+            )
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+
+                    FoodName=languages[position].toString()
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
         }
 
     }
@@ -137,9 +171,14 @@ class AddFoodingDetails : AppCompatActivity() {
         var message = ""
         var focusView: View? = null
         var tempCond = false
-
-        FoodName=foodName.text.toString()
         FoodPrice=foodPrice.text.toString()
+
+        if (intent.getStringExtra("from").equals("lodging")){
+            FoodName=foodName.text.toString()
+        }
+
+
+
 
 
         if (TextUtils.isEmpty(FoodName)) {
