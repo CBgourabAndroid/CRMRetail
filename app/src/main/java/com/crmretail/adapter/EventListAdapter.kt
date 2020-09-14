@@ -89,8 +89,11 @@ class EventListAdapter  : RecyclerView.Adapter<EventListAdapter.MyViewHolder>(){
 
 
         holder.lbl_textViewType.setText(dataList[listPosition].eventType.toString())
-        holder.lbl_textViewtime.setText("Timming : "+dataList[listPosition].startTime.toString()+"-"+dataList[listPosition].timeFormat.toString())
-        holder.lbl_textViewloc.setText(dataList[listPosition].location.toString())
+        holder.lbl_textViewtime.setText("Timming : "+dataList[listPosition].startTime.toString())
+        if (dataList[listPosition].location!=null){
+            holder.lbl_textViewloc.setText(dataList[listPosition].location.toString())
+
+        }
 
 
         holder.lbl_monthD.setText(PostInterface.format_edatem(dataList[listPosition].eventDate))

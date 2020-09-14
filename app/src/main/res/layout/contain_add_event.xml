@@ -135,7 +135,6 @@
                         android:layout_marginTop="19dp"
                         android:layout_marginRight="18.9dp"
                         android:text="* Start Time"
-                        android:visibility="gone"
                         android:textColor="@color/logoColorTwo"
                         android:textStyle="bold" />
 
@@ -147,7 +146,6 @@
                         android:layout_marginRight="18.9dp"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="6dp"
-                        android:visibility="gone"
                         app:cardElevation="1dp">
 
 

@@ -517,13 +517,13 @@ class EventAddActivity : AppCompatActivity() {
             cancel = true
             tempCond = false
         }
-      /*  if (TextUtils.isEmpty(startTime)) {
+        if (TextUtils.isEmpty(startTime)) {
             message = "Enter Start Time"
             focusView = startTimeTxt
             cancel = true
             tempCond = false
         }
-        if (TextUtils.isEmpty(endTime)) {
+       /* if (TextUtils.isEmpty(endTime)) {
             message = "Enter EndTime"
             focusView = endTimeTxt
             cancel = true
@@ -582,14 +582,14 @@ class EventAddActivity : AppCompatActivity() {
                 reqEntity!!.addPart("user_id", StringBody(psh.id))
                 reqEntity!!.addPart("event_type", StringBody(eventTypeID))
                 reqEntity!!.addPart("event_date", StringBody(currentDateStart))
-               // reqEntity!!.addPart("start_time", StringBody(startTime))
+                reqEntity!!.addPart("start_time", StringBody(startTime))
                // reqEntity!!.addPart("end_time", StringBody(endTime))
 
                 reqEntity!!.addPart("noa", StringBody(no_of_people.text.toString()))
                 reqEntity!!.addPart("budget", StringBody(budgetEdt.text.toString()))
 
 
-                if (eventType.equals("Mason Meet")||eventType.equals("Engineer Meet")){
+                if (eventType.equals("Masson Meet")||eventType.equals("Engineer Meet")){
 
 
                     for (j in 0 until CustListAdapter.xyz!!.size){
@@ -653,7 +653,7 @@ class EventAddActivity : AppCompatActivity() {
 
     private fun showToastLong(message: String) {
 
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
 
     }
 
