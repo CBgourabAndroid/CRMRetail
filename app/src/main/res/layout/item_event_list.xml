@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -96,8 +96,26 @@
                         android:id="@+id/textViewloc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="3"
-                        android:text="Location\nKotulpur, Mejia, Onda, Patrasayer, Raipur, Ranibandh, Saltora, Sarenga, Simlapal, Sonamukhi, Taldangra, Bolpur Sriniketan, Dubrajpur, Ilambazar, Khoyrasol, Labpur, Mayureswar I, Mayureswar II, Mohammad Bazar, Murarai I, Murarai II, Nalhati I, Nalhati II"
+                        android:text="Location : Kotulpur"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <TextView
+                        android:id="@+id/textViewbudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Budget : ₹5000"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+                    <TextView
+                        android:id="@+id/textViewnoa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No Of Attendance : 55"
                         android:layout_marginLeft="10dp"
                         android:textSize="13dp"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>

@@ -9,6 +9,12 @@ public class EventList {
     @SerializedName("event_id")
     @Expose
     private Integer eventId;
+    @SerializedName("no_of_attn")
+    @Expose
+    private Integer noOfAttn;
+    @SerializedName("budget")
+    @Expose
+    private String budget;
     @SerializedName("event_date")
     @Expose
     private String eventDate;
@@ -17,7 +23,7 @@ public class EventList {
     private String startTime;
     @SerializedName("time_format")
     @Expose
-    private String timeFormat;
+    private Object timeFormat;
     @SerializedName("location")
     @Expose
     private String location;
@@ -31,6 +37,22 @@ public class EventList {
 
     public void setEventId(Integer eventId) {
         this.eventId = eventId;
+    }
+
+    public Integer getNoOfAttn() {
+        return noOfAttn;
+    }
+
+    public void setNoOfAttn(Integer noOfAttn) {
+        this.noOfAttn = noOfAttn;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
     }
 
     public String getEventDate() {
@@ -49,11 +71,11 @@ public class EventList {
         this.startTime = startTime;
     }
 
-    public String getTimeFormat() {
+    public Object getTimeFormat() {
         return timeFormat;
     }
 
-    public void setTimeFormat(String timeFormat) {
+    public void setTimeFormat(Object timeFormat) {
         this.timeFormat = timeFormat;
     }
 

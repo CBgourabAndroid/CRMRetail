@@ -47,6 +47,9 @@ class EventListAdapter  : RecyclerView.Adapter<EventListAdapter.MyViewHolder>(){
         internal var lbl_textViewtime: TextView
         internal var lbl_textViewloc: TextView
 
+        internal var lbl_textViewbud: TextView
+        internal var lbl_textViewna: TextView
+
         internal var lbl_firstD: TextView
         internal var lbl_monthD: TextView
 
@@ -58,6 +61,8 @@ class EventListAdapter  : RecyclerView.Adapter<EventListAdapter.MyViewHolder>(){
             lbl_textViewType = itemView.findViewById(R.id.textViewType)
             lbl_textViewtime = itemView.findViewById(R.id.textViewtime)
             lbl_textViewloc = itemView.findViewById(R.id.textViewloc)
+            lbl_textViewbud = itemView.findViewById(R.id.textViewbudget)
+            lbl_textViewna = itemView.findViewById(R.id.textViewnoa)
             lbl_firstD=itemView.findViewById(R.id.firstD)
             lbl_monthD=itemView.findViewById(R.id.monthD)
             menuImg=itemView.findViewById(R.id.img_menu)
@@ -90,8 +95,14 @@ class EventListAdapter  : RecyclerView.Adapter<EventListAdapter.MyViewHolder>(){
 
         holder.lbl_textViewType.setText(dataList[listPosition].eventType.toString())
         holder.lbl_textViewtime.setText("Timming : "+dataList[listPosition].startTime.toString())
+        holder.lbl_textViewbud.setText("Budget : ₹"+dataList[listPosition].budget.toString())
+        holder.lbl_textViewna.setText("No Of Attendance : "+dataList[listPosition].noOfAttn.toString())
         if (dataList[listPosition].location!=null){
-            holder.lbl_textViewloc.setText(dataList[listPosition].location.toString())
+            holder.lbl_textViewloc.setText("Location : "+dataList[listPosition].location.toString())
+
+        }
+        else{
+            holder.lbl_textViewloc.setText("Location : "+"Not Provided")
 
         }
 
