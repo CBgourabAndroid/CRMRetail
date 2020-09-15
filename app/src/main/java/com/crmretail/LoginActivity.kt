@@ -352,7 +352,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
                 if (response.code()==200){
                     progressDialog.dismiss()
 
-                    val statusCode = response.code()
+                    //val statusCode = response.code()
                     val avv = response.body()!!.id
                     Log.i("onSuccess", avv.toString());
                     if (avv!=null) {
