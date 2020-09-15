@@ -100,6 +100,10 @@ public class UserShared {
         return prefs.getString(context.getString(R.string.customerinfo), context.getString(R.string.shared_no_data));
     }
 
+    public String getUserPic() {
+        return prefs.getString("userImg", context.getString(R.string.shared_no_data));
+    }
+
     public String getCustomerinfo81() {
         return prefs.getString(context.getString(R.string.customerinfo81), context.getString(R.string.shared_no_data));
     }

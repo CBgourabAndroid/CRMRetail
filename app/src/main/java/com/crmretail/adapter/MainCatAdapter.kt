@@ -365,6 +365,7 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
                 }
                 else{
                     progressDialog.dismiss()
+                    
                     Toast.makeText(context, "Login Expires", Toast.LENGTH_SHORT).show()
 
                     val myPrefs = context.getSharedPreferences("MY_SHARED_PREF", Context.MODE_PRIVATE)
