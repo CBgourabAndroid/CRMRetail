@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.AsyncTask
@@ -23,25 +22,20 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
-import com.crmretail.modelClass.AreaInfo
 import com.crmretail.modelClass.PersonalInfo
 import com.crmretail.shared.UserShared
 import com.crmretail.utils.Utility
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -56,7 +50,9 @@ import org.apache.http.entity.mime.content.StringBody
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
 import org.json.JSONObject
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
 import java.util.*
 
 class ProfileActivity : AppCompatActivity(){
@@ -94,6 +90,8 @@ class ProfileActivity : AppCompatActivity(){
     private  val REQUEST_CODE = 42
     var photoFile: File?=null
     lateinit var prefs: SharedPreferences
+
+    var flag=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -210,7 +208,8 @@ class ProfileActivity : AppCompatActivity(){
 
     private fun onclick() {
         userImg.setOnClickListener {
-            selectImage()
+           // selectImage()
+            cameraIntent()
         }
 
     }
@@ -256,12 +255,12 @@ class ProfileActivity : AppCompatActivity(){
     }
 
     private fun galleryIntent() {
-        val intent = Intent()
-        photoFile = getPhotoFile(FILE_NAME)
-        val fileProvider = FileProvider.getUriForFile(this, "com.crmretail", photoFile!!)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+        val intent = Intent(Intent.ACTION_PICK)
+      //  photoFile = getPhotoFile(FILE_NAME)
+        //val fileProvider = FileProvider.getUriForFile(this, "com.crmretail", photoFile!!)
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT//
+        //intent.action = Intent.ACTION_GET_CONTENT//
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE)
 
 
@@ -270,6 +269,7 @@ class ProfileActivity : AppCompatActivity(){
     private fun cameraIntent() {
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)
         photoFile = getPhotoFile(FILE_NAME)
 
         // This DOESN'T work for API >= 24 (starting 2016)
@@ -308,6 +308,8 @@ class ProfileActivity : AppCompatActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            val takenImage = data?.extras?.get("data") as Bitmap
+            flag=1
+
             val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
             //foodPic.setImageBitmap(takenImage)
             Glide.with(this)
@@ -316,10 +318,11 @@ class ProfileActivity : AppCompatActivity(){
                 .into(userImg)
         }
         else if(requestCode==SELECT_FILE&&resultCode==Activity.RESULT_OK){
-
+            flag=2
            // onSelectFromGalleryResult(data)
             picturepath=data!!.data
-            val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+
+            //val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
             Glide.with(this)
                 .load(picturepath)
                 .apply(RequestOptions().circleCrop())
@@ -356,12 +359,12 @@ class ProfileActivity : AppCompatActivity(){
         var focusView: View? = null
         var tempCond = false
 
-        if (photoFile==null) {
+       /* if (photoFile==null) {
             message = "Please Provide Your Profile Image!!"
             focusView = userImg
             cancel = true
             tempCond = false
-        }
+        }*/
 
 
 
@@ -384,8 +387,16 @@ class ProfileActivity : AppCompatActivity(){
 
                 reqEntity!!.addPart("user_id", StringBody(psh.id))
 
-                dl_upload_file = photoFile!!.absoluteFile
-                reqEntity!!.addPart("file_url", FileBody(dl_upload_file))
+                if (flag==1){
+                    dl_upload_file = photoFile!!.absoluteFile
+                    reqEntity!!.addPart("file_url", FileBody(dl_upload_file))
+                }
+                else if(flag==2){
+                    photoFile = File(picturepath!!.getPath())
+                    dl_upload_file = photoFile!!.absoluteFile
+                    reqEntity!!.addPart("file_url", FileBody(dl_upload_file))
+                }
+
 
 
 
