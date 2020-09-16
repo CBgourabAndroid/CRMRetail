@@ -179,6 +179,14 @@
             tools:ignore="LockedOrientationActivity" />
 
 
+
+        <activity android:name=".activity.PJPMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+
         <activity android:name=".activity.PreJobPlanActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
@@ -189,11 +197,20 @@
 
 
 
+        <activity android:name=".activity.VisitMenuActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity android:name=".activity.BrandingActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+
 
 
 
         <activity android:name=".activity.OutletVisitActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />

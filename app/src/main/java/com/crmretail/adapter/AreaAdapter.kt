@@ -45,6 +45,7 @@ class AreaAdapter ( var conetext: Context,var originalData:ArrayList<ZoneArray>)
     lateinit var prefss: SharedPreferences
 
 
+
     private val viewPool = RecyclerView.RecycledViewPool()
 
 
@@ -146,6 +147,18 @@ class AreaAdapter ( var conetext: Context,var originalData:ArrayList<ZoneArray>)
         holder.ledger_Lay.setOnClickListener {
 
             confirmTask("Ledger", position)
+        }
+
+        holder.proceed_txt.setOnClickListener {
+
+            val i1 = Intent(conetext, VisitMenuActivity::class.java)
+            i1.putExtra("shopid",originalData!![position].customerId.toString())
+            i1.putExtra("shopName", originalData!!.get(position).customerName)
+            i1.putExtra("shopAddress", originalData!!.get(position).customerAddress)
+            i1.putExtra("shopNumber", originalData!!.get(position).customerContact)
+            i1.putExtra("type", "")
+            conetext.startActivity(i1)
+
         }
 
 
@@ -261,6 +274,7 @@ class AreaAdapter ( var conetext: Context,var originalData:ArrayList<ZoneArray>)
         val orderPayLay:LinearLayout=itemView!!.findViewById(R.id.orderPaymentLay)
        // val tv_visitTxt: TextView = itemView!!.findViewById(R.id.visitTxt)
        val ledger_Lay:LinearLayout=itemView!!.findViewById(R.id.ledgerLay)
+        val proceed_txt:TextView=itemView!!.findViewById(R.id.proceedTxt)
 
 
     }

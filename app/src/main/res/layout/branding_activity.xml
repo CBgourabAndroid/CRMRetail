@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Pre Job Planning"
+                        android:text="Branding"
                         android:textColor="#ffffff"
                         android:textSize="20dp"/>
 
@@ -83,26 +83,9 @@
 
 
 
-        <include layout="@layout/contain_add_date_location" />
-
-
-
+        <include layout="@layout/contain_branding" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/submitPJob"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:text="SUBMIT"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:layout_gravity="bottom"
-        android:background="@color/logoColorTwo"
-        android:textStyle="bold" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

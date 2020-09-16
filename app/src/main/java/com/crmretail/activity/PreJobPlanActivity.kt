@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -21,8 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
-import com.crmretail.adapter.AllPlaceAdapter
-import com.crmretail.adapter.HolyDayAdapter
 import com.crmretail.adapter.PrePlaceAdapter
 import com.crmretail.modelClass.Location
 import com.crmretail.modelClass.LocationResponce
@@ -32,9 +31,7 @@ import kotlinx.android.synthetic.main.pre_job_plan_activity.*
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
-import org.apache.http.entity.mime.HttpMultipartMode
 import org.apache.http.entity.mime.MultipartEntity
-import org.apache.http.entity.mime.content.StringBody
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
 import org.json.JSONObject
@@ -64,8 +61,7 @@ class PreJobPlanActivity : AppCompatActivity() {
 
     lateinit var dataList:ArrayList<Location>
     private var adapter: PrePlaceAdapter? = null
-    var reqEntity : MultipartEntity?=null
-    internal var responseString: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,6 +123,15 @@ class PreJobPlanActivity : AppCompatActivity() {
                 showToastLong("Please Select Atlist One Place")
             }
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra("date", "")
+        intent.putExtra("locationArray", "")
+        intent.putExtra("locationArrayName","")
+        setResult(124, intent)
+        finish()
     }
 
     private fun dateFun() {
@@ -283,51 +288,23 @@ class PreJobPlanActivity : AppCompatActivity() {
 
             // imm.hideSoftInputFromWindow(conetext.getWindowToken(), 0)
 
-            try {
 
 
-                reqEntity = MultipartEntity(
-                    HttpMultipartMode.BROWSER_COMPATIBLE
-                )
+            val ss=PrePlaceAdapter.xyz
+            val nn=PrePlaceAdapter.abc
+            Toast.makeText(applicationContext,ss.toString(),Toast.LENGTH_LONG).show()
 
-
-
-                reqEntity!!.addPart("user_id", StringBody(psh.id))
-                reqEntity!!.addPart("duty_date", StringBody(currentDateStart))
-
-                for (j in 0 until PrePlaceAdapter.xyz!!.size){
-
-                    val key1="areaList["+j+"]"
-
-                    reqEntity!!.addPart(key1, StringBody(PrePlaceAdapter.xyz!![j].toString()))
-
-
-                }
+            val intent = Intent()
+            intent.putExtra("date", currentDateStart)
+           // intent.putExtra("locationArray", ss.toString())
+            intent.putStringArrayListExtra("locationArray", ss as ArrayList<String?>?)
+            intent.putStringArrayListExtra("locationArrayName", nn as ArrayList<String?>?)
+            setResult(124, intent)
+            finish()
 
 
 
 
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-
-            if(!PostInterface.isConnected(this)){
-
-                Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
-            }
-            else{
-
-                progressDialog.setMessage("Please wait ...")
-                progressDialog.setCancelable(false)
-                progressDialog.show()
-                val editProfileAsyncTask = UploadFileToServer()
-                editProfileAsyncTask.execute(null as Void?)
-
-
-            }
 
 
 
@@ -338,109 +315,7 @@ class PreJobPlanActivity : AppCompatActivity() {
     }
 
 
-    private inner class UploadFileToServer : AsyncTask<Void, Int, String>() {
-        override fun onPreExecute() {
-            // setting progress bar to zero
-            /*progressDialog = ProgressDialog.show(PersonalRegistrationActivity.this,
-					"",
-					getString(R.string.progress_bar_loading_message),
-					false);*/
-            super.onPreExecute()
-        }
 
-
-        override fun doInBackground(vararg params: Void): String {
-            return uploadFile()
-        }
-
-        private fun uploadFile(): String {
-
-            val httpclient: HttpClient = DefaultHttpClient()
-            val httppost = HttpPost(PostInterface.BaseURL + "mo-duty")
-
-            try {
-
-
-                /*to print in log*/
-                val bytes = ByteArrayOutputStream()
-                reqEntity!!.writeTo(bytes)
-                val content = bytes.toString()
-                Log.e("MultiPartEntityRequest:", content)
-
-                /*to print in log*/httppost.entity = reqEntity
-                httppost.setHeader("Authorization", "Bearer " + psh.getAccessToken())
-
-                // Making server call
-                val response = httpclient.execute(httppost)
-                val r_entity = response.entity
-                val statusCode = response.statusLine.statusCode
-                if (statusCode == 200) {
-                    // Server response
-                    responseString = EntityUtils.toString(r_entity)
-
-                    /*	for (int i = 0; i <locationData.size(); i++) {
-
-						if (lastUpdatedPos==i){
-
-							locationData.clear();
-							Log.v("Last Postion Delete",String.valueOf(i));
-						}
-
-					}*/
-                } else {
-                    responseString = ("Error occurred! Http Status Code: "
-                            + statusCode)
-                }
-            } catch (e: ClientProtocolException) {
-                responseString = e.toString()
-            } catch (e: IOException) {
-                responseString = e.toString()
-            }
-            return responseString!!
-
-
-        }
-
-
-        @SuppressLint("NewApi")
-        override fun onPostExecute(result: String) {
-            Log.e(AppController.TAG, "Response from server: $result")
-
-            try {
-                if (responseString != "") {
-
-                    val jsonObject = JSONObject(responseString)
-                    // val ddd =jsonObject.getJSONObject("result")
-                    val Ack = jsonObject.getString("status").toInt()
-                    val msg=jsonObject.getString("msg")
-                    if (Ack == 200) {
-                        progressDialog!!.dismiss()
-                        progressDialog!!.cancel()
-                        //  showToastLong("Successfully Updated")
-                        showToastLong(msg)
-                        finish()
-
-
-                    } else {
-                        progressDialog!!.dismiss()
-                        progressDialog!!.cancel()
-                        showToastLong(msg)
-                        finish()
-                    }
-                } else {
-                    progressDialog!!.dismiss()
-                    progressDialog!!.cancel()
-                    showToastLong("Sorry! Problem cannot be recognized.")
-                }
-            } catch (e: Exception) {
-                progressDialog!!.dismiss()
-                progressDialog!!.cancel()
-                e.printStackTrace()
-            }
-
-        }
-
-    }
 
 
 

@@ -163,7 +163,7 @@ open class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSe
             }
             R.id.nav_prejob->{
 
-                val i1 = Intent(this@MainActivity, PreJobPlanActivity::class.java)
+                val i1 = Intent(this@MainActivity, PJPMainActivity::class.java)
                 startActivity(i1)
             }
 

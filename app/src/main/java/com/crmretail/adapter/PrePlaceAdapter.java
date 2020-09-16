@@ -28,7 +28,7 @@ public class PrePlaceAdapter extends RecyclerView.Adapter<PrePlaceAdapter.ViewHo
     private ArrayList<Location> items = new ArrayList<>();
     Activity context;
     public static  ArrayList<String> xyz=new ArrayList<>();
-    ArrayList<String> abc=new ArrayList<>();
+    public static ArrayList<String> abc=new ArrayList<>();
 
     SparseBooleanArray itemStateArray= new SparseBooleanArray();
     ConnectionDetector connection;
@@ -87,6 +87,8 @@ public class PrePlaceAdapter extends RecyclerView.Adapter<PrePlaceAdapter.ViewHo
             mCheckedTextView = (CheckedTextView) itemView.findViewById(R.id.checked_text_view);
             mCheckedTextView.setVisibility(View.VISIBLE);
             name=itemView.findViewById(R.id.name);
+            xyz=new ArrayList<String>();
+            abc=new ArrayList<String>();
 
 
             itemView.setOnClickListener(this);

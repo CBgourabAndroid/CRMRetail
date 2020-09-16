@@ -101,6 +101,13 @@
         <item>No</item>
     </string-array>
 
+    <string-array name="yesnodam">
+        <item>Yes</item>
+        <item>No</item>
+        <item>Damaged</item>
+    </string-array>
+
+
     <string-array name="statusType">
         <item>Good</item>
         <item>Damaged</item>

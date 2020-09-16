@@ -60,7 +60,7 @@ class OutStanding : AppCompatActivity() {
             onBackPressed()
         }
 
-        Toast.makeText(this,intent.getStringExtra("shopid").toString(),Toast.LENGTH_SHORT).show()
+     //   Toast.makeText(this,intent.getStringExtra("shopid").toString(),Toast.LENGTH_SHORT).show()
 
         if(!PostInterface.isConnected(this@OutStanding)){
 

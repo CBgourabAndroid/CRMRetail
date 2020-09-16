@@ -2,49 +2,55 @@ package com.crmretail.activity
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
-import com.crmretail.adapter.DateLocAdapter
-import com.crmretail.adapter.PrePlaceAdapter
-import com.crmretail.modelClass.DateLocModel
 import com.crmretail.shared.UserShared
-import kotlinx.android.synthetic.main.contain_add_date_location.*
-import kotlinx.android.synthetic.main.pjp_main_activity.*
-import kotlinx.android.synthetic.main.pre_job_plan_activity.*
+import kotlinx.android.synthetic.main.contain_branding.*
+import kotlinx.android.synthetic.main.contain_new_register.*
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.mime.HttpMultipartMode
 import org.apache.http.entity.mime.MultipartEntity
+import org.apache.http.entity.mime.content.FileBody
 import org.apache.http.entity.mime.content.StringBody
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
-class PJPMainActivity: AppCompatActivity() {
-
-
-    lateinit var recyclerView: RecyclerView
-    lateinit var dateLocList:ArrayList<DateLocModel>
-    lateinit var adapter:DateLocAdapter
+class BrandingActivity :AppCompatActivity() {
     lateinit var toolbar: Toolbar
-    lateinit var progressDialog:ProgressDialog
-    lateinit var psh:UserShared
+    lateinit var progressDialog: ProgressDialog
+    lateinit var psh: UserShared
+
+    var GSB=""
+    var NLB=""
+    var InshopBranding=""
+    var Certificate=""
+    var PriceBoard=""
+    var c: Date? = null
+    var df: SimpleDateFormat? = null
+    var formattedDate: String? = null
+
     var reqEntity : MultipartEntity?=null
     internal var responseString: String? = null
 
@@ -56,7 +62,7 @@ class PJPMainActivity: AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
         }
-        setContentView(R.layout.pjp_main_activity)
+        setContentView(R.layout.branding_activity)
         toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
@@ -69,174 +75,141 @@ class PJPMainActivity: AppCompatActivity() {
             onBackPressed()
         }
 
-        dateLocList= ArrayList()
         progressDialog= ProgressDialog(this)
         psh= UserShared(this)
+        c = Calendar.getInstance().time
+        df = SimpleDateFormat("yyyy-MM-dd")
+        formattedDate = df!!.format(c)
 
         inti()
-
-
-
     }
-
-
 
     private fun inti() {
 
-        recyclerView=findViewById(R.id.recyv_fooding)
-        add_dateLoc.setOnClickListener {
 
-            val intent = Intent(this, PreJobPlanActivity::class.java)
-            startActivityForResult(intent, 124)
-        }
-
-        submitPJob.setOnClickListener {
-
-            if (dateLocList.size != 0) {
-                //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
-                //mpopup.dismiss()
-
-                dataInput()
-
-            } else {
-                showToastLong("Please provide your job planning")
-            }
-        }
-    }
-
-    private fun dataInput() {
-
-        try {
-
-
-             reqEntity = MultipartEntity(
-                 HttpMultipartMode.BROWSER_COMPATIBLE
-             )
-
-
-
-             reqEntity!!.addPart("user_id", StringBody(psh.id))
-
-             for (j in 0 until dateLocList!!.size){
-
-                  val dateKey="duty_date["+j+"]"
-
-                 reqEntity!!.addPart(dateKey, StringBody(dateLocList[j].date))
-
-                 for (k in 0 until dateLocList[j].loc.size){
-
-                     val key1="areaList["+j+"]["+k+"]"
-
-                     reqEntity!!.addPart(key1, StringBody(dateLocList[j].loc[k].toString()))
-                 }
-
-
-
-
-
-             }
-
-
-
-
-
-
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        if(!PostInterface.isConnected(this)){
-
-            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
-        }
-        else{
-
-            progressDialog.setMessage("Please wait ...")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-            val editProfileAsyncTask = UploadFileToServer()
-            editProfileAsyncTask.execute(null as Void?)
-
-
-        }
-
-    }
-
-    private fun showToastLong(message: String) {
-
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         super.onActivityResult(requestCode, resultCode, data)
-        // super.onActivityResult(requestCode, resultCode, data);
-
-        if (data != null) {
-            if (requestCode==124){
-                val returnValueDate = data.getStringExtra("date")
-                if (!returnValueDate.equals("")){
-
-                    val returnValueDate = data.getStringExtra("date")
-                    //val returnValueLoc = data.getStringExtra("locationArray")
-                    val returnValueLoc =
-                        data.getStringArrayListExtra("locationArray")
-                    val returnValueLocName =
-                        data.getStringArrayListExtra("locationArrayName")
-                    // val returnValueImage = data.getStringExtra("pic")
-
-                    val model= DateLocModel()
-                    model.date=returnValueDate
-                    model.loc=returnValueLoc
-                    model.locName=returnValueLocName
-                    dateLocList.add(model)
-
-                    setData()
-                }
-
-
+        spinner_gsb?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                GSB= spinner_gsb.getItemAtPosition(position).toString()
+            }
 
-            else {
-
-                // failed to capture image
-                Toast.makeText(
-                    this,
-                    "Sorry! Failed ", Toast.LENGTH_SHORT
-                )
-                    .show()
+        }
+        spinner_nlb?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                NLB= spinner_nlb.getItemAtPosition(position).toString()
+            }
+
+        }
+        spinner_inshop_branding?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                InshopBranding= spinner_inshop_branding.getItemAtPosition(position).toString()
+            }
+
+        }
+        spinner_Certificate?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Certificate= spinner_Certificate.getItemAtPosition(position).toString()
+            }
+
+        }
+        spinner_price_board?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                PriceBoard= spinner_price_board.getItemAtPosition(position).toString()
+            }
+
+        }
+
+        submitBranding.setOnClickListener {
+
+            validation()
+        }
+    }
+
+
+    private fun validation() {
+
+        var cancel = false
+        var message = ""
+        var focusView: View? = null
+        var tempCond = false
+
+
+
+        if (cancel) {
+            // focusView.requestFocus();
+            if (!tempCond) {
+                focusView!!.requestFocus()
+            }
+            showToastLong(message)
         } else {
-            Toast.makeText(
-                this,
-                "User cancelled ", Toast.LENGTH_SHORT
-            )
-                .show()
+            val imm = this
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+
+
+            try {
+
+
+                reqEntity = MultipartEntity(
+                    HttpMultipartMode.BROWSER_COMPATIBLE
+                )
+
+
+
+
+                reqEntity!!.addPart("user_id", StringBody(psh.id))
+                reqEntity!!.addPart("cust_id", StringBody(intent.getStringExtra("shopid")))
+                reqEntity!!.addPart("visit_date", StringBody(formattedDate))
+                reqEntity!!.addPart("nlb", StringBody(NLB))
+                reqEntity!!.addPart("gsb", StringBody(GSB))
+                reqEntity!!.addPart("isb", StringBody(InshopBranding))
+                reqEntity!!.addPart("certificate", StringBody(Certificate))
+                reqEntity!!.addPart("price_board", StringBody(PriceBoard))
+
+
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+            if(!PostInterface.isConnected(this)){
+
+                Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+            }
+            else{
+
+                progressDialog.setMessage("Please wait ...")
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+                val editProfileAsyncTask = UploadFileToServer()
+                editProfileAsyncTask.execute(null as Void?)
+
+            }
+
+
         }
-
-
     }
-
-    private fun setData() {
-
-
-        if (dateLocList.size>0){
-
-            adapter = DateLocAdapter(applicationContext)
-            // recyclerViewCategory.layoutManager = GridLayoutManager(this,3) as RecyclerView.LayoutManager?
-
-            recyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL ,false)
-            recyclerView.adapter = adapter
-            adapter.setDataListItems(dateLocList)
-        }
-
-
-    }
-
 
     private inner class UploadFileToServer : AsyncTask<Void, Int, String>() {
         override fun onPreExecute() {
@@ -256,7 +229,7 @@ class PJPMainActivity: AppCompatActivity() {
         private fun uploadFile(): String {
 
             val httpclient: HttpClient = DefaultHttpClient()
-            val httppost = HttpPost(PostInterface.BaseURL + "mo-duty")
+            val httppost = HttpPost(PostInterface.BaseURL + "osb")
 
             try {
 
@@ -325,7 +298,6 @@ class PJPMainActivity: AppCompatActivity() {
                         progressDialog!!.dismiss()
                         progressDialog!!.cancel()
                         showToastLong(msg)
-                        finish()
                     }
                 } else {
                     progressDialog!!.dismiss()
@@ -339,6 +311,12 @@ class PJPMainActivity: AppCompatActivity() {
             }
 
         }
+
+    }
+
+    private fun showToastLong(message: String) {
+
+        Toast.makeText(applicationContext,message, Toast.LENGTH_SHORT).show()
 
     }
 }
