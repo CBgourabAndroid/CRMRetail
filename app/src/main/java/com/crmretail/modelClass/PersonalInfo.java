@@ -23,6 +23,11 @@ public class PersonalInfo {
     @SerializedName("area")
     @Expose
     private String area;
+    @SerializedName("profile_image")
+    @Expose
+    private String profile_image;
+
+
 
     public String getName() {
         return name;
@@ -73,4 +78,11 @@ public class PersonalInfo {
     }
 
 
+    public String getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(String profile_image) {
+        this.profile_image = profile_image;
+    }
 }

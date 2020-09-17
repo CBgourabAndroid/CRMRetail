@@ -193,7 +193,7 @@ class ProfileActivity : AppCompatActivity(){
         tvdoj.text=datalist[0].doj
 
         Glide.with(this)
-            .load(psh.userPic)
+            .load(datalist[0].profile_image)
             .error(R.drawable.ss)
             .placeholder(R.drawable.ss)
             .apply(RequestOptions().circleCrop())
@@ -503,9 +503,11 @@ class ProfileActivity : AppCompatActivity(){
                         progressDialog!!.cancel()
                         //  showToastLong("Successfully Updated")
 
-                        val editor = prefs.edit()
+                        datalist[0].setProfile_image(jsonObject.getString("image"))
+
+                       /* val editor = prefs.edit()
                         editor.putString("userImg",jsonObject.getString("image"))
-                        editor.commit()
+                        editor.commit()*/
                         showToastLong("Successfully Updated")
                         finish()
 

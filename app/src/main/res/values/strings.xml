@@ -80,6 +80,31 @@
         <item>Dinner</item>
     </string-array>
 
+    <string-array name="SellingBrand">
+        <item>TMT</item>
+        <item>  JSW</item>
+        <item>  SHYAM STEEL</item>
+        <item>  SRMB</item>
+        <item>  CAPTAIN</item>
+        <item>  ELCTROL STEEL</item>
+        <item>  MAGADH</item>
+        <item>  KAMDHENU</item>
+        <item>  BALMUKUND</item>
+        <item>  MAITHON</item>
+        <item>  SUPER</item>
+        <item>  MONGIA</item>
+        <item>  OTHERS</item>
+        <item>CEMENT</item>
+        <item>  ULTRATECH</item>
+        <item>  NOVOCO</item>
+        <item>  ACC</item>
+        <item>  AMBUJA</item>
+        <item>  BALMIA</item>
+        <item>  OTHERS</item>
+
+
+    </string-array>
+
     <string-array name="travelType">
         <item>Private</item>
         <item>Public</item>

@@ -1,33 +1,19 @@
 package com.crmretail.activity
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
 import com.crmretail.R
 import com.google.android.material.textfield.TextInputEditText
-import java.io.*
+import java.util.*
 
 class AddSellingBrand : AppCompatActivity() {
 
@@ -36,9 +22,15 @@ class AddSellingBrand : AppCompatActivity() {
     lateinit var brandName: TextInputEditText
     lateinit var brandQuantity: TextInputEditText
 
+    var aa=""
+    var bb=""
     var BrandName=""
     var Quantity=""
-
+    var expandableListView: ExpandableListView? = null
+    var expandableListAdapter: ExpandableListAdapter? = null
+    var expandableListTitle: List<String>? = null
+    var expandableListDetail: HashMap<String, List<String>>? =
+        null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +68,47 @@ class AddSellingBrand : AppCompatActivity() {
         brandQuantity=findViewById(R.id.foodTypePrice)
         saveData=findViewById(R.id.savetxt)
 
+        expandableListView = findViewById(R.id.expandableListView) as ExpandableListView
+        expandableListDetail = ExpandableListDataPump.getData()
+        expandableListTitle = ArrayList(expandableListDetail!!.keys)
+        expandableListAdapter =
+            CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail)
+        expandableListView!!.setAdapter(expandableListAdapter)
+        expandableListView!!.setOnGroupExpandListener { groupPosition ->
+            /*Toast.makeText(
+                applicationContext,
+                expandableListTitle!!.get(groupPosition) + " List Expanded.",
+                Toast.LENGTH_SHORT
+            ).show()*/
+            aa=expandableListTitle!!.get(groupPosition)
+        }
+
+        expandableListView!!.setOnGroupCollapseListener { groupPosition ->
+           /* Toast.makeText(
+                applicationContext,
+                expandableListTitle!!.get(groupPosition) + " List Collapsed.",
+                Toast.LENGTH_SHORT
+            ).show()*/
+        }
+
+        expandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+            /*Toast.makeText(
+                applicationContext,
+                expandableListTitle!!.get(groupPosition) + " -> "
+                        + expandableListDetail!!.get(
+                    expandableListTitle!!.get(groupPosition)
+                )!![childPosition], Toast.LENGTH_SHORT
+            ).show()*/
+            BrandName=expandableListTitle!!.get(groupPosition) + "-"+ expandableListDetail!!.get(
+                expandableListTitle!!.get(groupPosition)
+            )!![childPosition]
+
+            expandableListView!!.collapseGroup(groupPosition)
+            brandName.setText(BrandName)
+
+            false
+        }
+
         saveData.setOnClickListener {
 
 
@@ -95,12 +128,12 @@ class AddSellingBrand : AppCompatActivity() {
         var focusView: View? = null
         var tempCond = false
 
-        BrandName=brandName.text.toString()
+       // BrandName=brandName.text.toString()
         Quantity=brandQuantity.text.toString()
 
 
         if (TextUtils.isEmpty(BrandName)) {
-            message = "Please Enter Brand Name"
+            message = "Please Select Brand Name"
             focusView = brandName
             cancel = true
             tempCond = false

@@ -117,7 +117,7 @@
 
 
 
-                            <com.google.android.material.textfield.TextInputLayout
+                           <!-- <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -131,7 +131,47 @@
                                     android:background="@android:color/transparent"
                                     android:inputType="text"/>
                             </com.google.android.material.textfield.TextInputLayout>
+-->
 
+                          <!--  <Spinner
+                                android:id="@+id/spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/SellingBrand"/>
+-->
+
+                            <ExpandableListView
+                                android:id="@+id/expandableListView"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:divider="@android:color/darker_gray"
+                                android:dividerHeight="0.5dp" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                             <com.google.android.material.textfield.TextInputLayout
+                                 android:layout_width="200dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"
+                                 >
+
+                                 <com.google.android.material.textfield.TextInputEditText
+                                     android:id="@+id/foodTypeName"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content"
+                                     android:hint="Brand Name"
+                                     android:focusable="false"
+                                     android:background="@android:color/transparent"
+                                     android:inputType="text"/>
+                             </com.google.android.material.textfield.TextInputLayout>
 
 
 
