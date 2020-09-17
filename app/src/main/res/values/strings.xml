@@ -153,8 +153,15 @@
         <item>Neighbourhood</item>
     </string-array>
 
+    <string-array name="natureofbusiness">
+        <item>Distributor</item>
+        <item>Dealer</item>
+    </string-array>
 
-
+    <string-array name="out_come">
+        <item>+Ve</item>
+        <item>-Ve</item>
+    </string-array>
 
 
     <string-array name="mediaType">

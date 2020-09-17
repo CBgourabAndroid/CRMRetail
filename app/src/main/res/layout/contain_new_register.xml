@@ -616,6 +616,178 @@
                     </androidx.cardview.widget.CardView>
 
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginRight="18.9dp"
+                        android:text="* Nature Of Business"
+                        android:textColor="@color/logoColorTwo"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="18.9dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="1dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+
+                            <Spinner
+                                android:id="@+id/nature"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/natureofbusiness"/>
+
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginRight="18.9dp"
+                        android:text="* No of siblings"
+                        android:textColor="@color/logoColorTwo"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="18.9dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="1dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+
+                            <EditText
+                                android:id="@+id/noofsib"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:background="#00000000"
+                                android:inputType="number"
+                                android:hint="Enter number of siblings"
+                                />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginRight="18.9dp"
+                        android:text="* Next Followup Date"
+                        android:textColor="@color/logoColorTwo"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="18.9dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="1dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+
+                            <EditText
+                                android:id="@+id/nextfollowupdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:background="#00000000"
+                                android:inputType="number"
+                                android:focusable="false"
+                                android:hint="Enter next follow-up date"
+                                />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginRight="18.9dp"
+                        android:text="* Outcome"
+                        android:textColor="@color/logoColorTwo"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18.7dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="18.9dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="1dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect"
+                            android:orientation="horizontal"
+                            android:padding="12dp">
+
+
+                            <Spinner
+                                android:id="@+id/outcome"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/out_come"/>
+
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
 
                     <TextView
                         android:layout_width="match_parent"

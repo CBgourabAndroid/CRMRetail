@@ -3,6 +3,7 @@ package com.crmretail.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -51,6 +52,9 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NewRegisterActivity : AppCompatActivity() {
@@ -75,12 +79,25 @@ class NewRegisterActivity : AppCompatActivity() {
     private var SituatedType=""
     private var InjunctionRoad=""
     private var Spaceofhoarding=""
+
+    private var NatureOfBusiness=""
+    private var OutCome=""
+
     var reqEntity : MultipartEntity?=null
     internal var responseString: String? = null
     lateinit var psh: UserShared
     lateinit var dl_upload_file: File
 
     lateinit var feedBackBtn:TextView
+
+    lateinit var currentDateStart: String
+    var calendar = Calendar.getInstance()
+    var year = calendar.get(Calendar.YEAR)
+    var month = calendar.get(Calendar.MONTH)
+    var dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+    var hour = calendar.get(Calendar.HOUR_OF_DAY)
+    var minute = calendar.get(Calendar.MINUTE)
+    lateinit var datePickerDialog: DatePickerDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,6 +210,29 @@ class NewRegisterActivity : AppCompatActivity() {
             }
 
         }
+
+        nature?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                NatureOfBusiness= nature.getItemAtPosition(position).toString()
+            }
+
+        }
+
+        outcome?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OutCome= outcome.getItemAtPosition(position).toString()
+            }
+
+        }
+
         submitNewRegister.setOnClickListener {
 
             validation()
@@ -205,6 +245,64 @@ class NewRegisterActivity : AppCompatActivity() {
             startActivity(i1)
 
         }
+
+        nextfollowupdate.setOnClickListener {
+
+            dateFun()
+        }
+
+    }
+
+    private fun dateFun() {
+
+
+        datePickerDialog = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { datePicker, fyear, fmonth, fday ->
+
+
+                val mont = fmonth + 1
+                var mt = ""
+                var dy = ""
+
+                if (mont < 10) {
+                    mt = "0" + mont.toString()
+                } else {
+                    mt = mont.toString()
+                }
+
+                if (fday < 10) {
+
+                    dy = "0" + fday.toString()
+                } else {
+
+                    dy = fday.toString()
+                }
+
+                val sss= PostInterface.getCalculatedDate("yyyy-MM-dd", -7)
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val beforeDate: Date = sdf.parse(sss)
+                val current: Date = sdf.parse(fyear.toString() + "-" + mt + "-" + dy)
+               /* if(beforeDate.before(current)){
+
+                }
+                else{
+                    Toast.makeText(this,"More then 7days not allowed!!",Toast.LENGTH_SHORT).show()
+                }*/
+
+                currentDateStart = fyear.toString() + "-" + mt + "-" + dy
+                nextfollowupdate.setText(PostInterface.format_date(currentDateStart))
+
+
+            },
+            year,
+            month,
+            dayOfMonth
+        )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        datePickerDialog.show()
+
+
     }
 
 
@@ -351,6 +449,16 @@ class NewRegisterActivity : AppCompatActivity() {
         }
 
 
+        if (TextUtils.isEmpty(currentDateStart)) {
+            message = "Please Select Next Follow-Up Date"
+            focusView = ownerName
+            cancel = true
+            tempCond = false
+        }
+
+
+
+
         if (photoFile==null) {
             message = "Please Provide Shop Image"
             focusView = supportImageNew
@@ -399,6 +507,11 @@ class NewRegisterActivity : AppCompatActivity() {
                 reqEntity!!.addPart("hoarding", StringBody(Spaceofhoarding))
                 reqEntity!!.addPart("lati", StringBody(LATSTR))
                 reqEntity!!.addPart("longi", StringBody(LONGSTR))
+
+                reqEntity!!.addPart("nature_of_business", StringBody(NatureOfBusiness))
+                reqEntity!!.addPart("no_of_siblings", StringBody(noofsib.text.toString()))
+                reqEntity!!.addPart("next_followup_date", StringBody(currentDateStart))
+                reqEntity!!.addPart("out_come", StringBody(OutCome))
 
 
 
