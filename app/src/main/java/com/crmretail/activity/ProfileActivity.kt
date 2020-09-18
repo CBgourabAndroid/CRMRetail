@@ -191,9 +191,20 @@ class ProfileActivity : AppCompatActivity(){
         tvEmail.text=datalist[0].reporting
         tvDlrCode.text=datalist[0].area
         tvdoj.text=datalist[0].doj
+        tvdep.text=datalist[0].department
+        tvempCode.text=datalist[0].emp_code
+
+        var imgurl=""
+        if (psh.newPic.equals("yes")){
+            imgurl=psh.userPic
+        }
+        else{
+            imgurl=datalist[0].profile_image
+        }
+
 
         Glide.with(this)
-            .load(datalist[0].profile_image)
+            .load(imgurl)
             .error(R.drawable.ss)
             .placeholder(R.drawable.ss)
             .apply(RequestOptions().circleCrop())
@@ -359,12 +370,12 @@ class ProfileActivity : AppCompatActivity(){
         var focusView: View? = null
         var tempCond = false
 
-       /* if (photoFile==null) {
+        if (photoFile==null) {
             message = "Please Provide Your Profile Image!!"
             focusView = userImg
             cancel = true
             tempCond = false
-        }*/
+        }
 
 
 
@@ -503,11 +514,14 @@ class ProfileActivity : AppCompatActivity(){
                         progressDialog!!.cancel()
                         //  showToastLong("Successfully Updated")
 
-                        datalist[0].setProfile_image(jsonObject.getString("image"))
 
-                       /* val editor = prefs.edit()
+
+                     //   datalist[0].setProfile_image(jsonObject.getString("image"))
+
+                        val editor = prefs.edit()
+                        editor.putString("newImg","yes")
                         editor.putString("userImg",jsonObject.getString("image"))
-                        editor.commit()*/
+                        editor.commit()
                         showToastLong("Successfully Updated")
                         finish()
 

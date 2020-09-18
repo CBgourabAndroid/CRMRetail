@@ -26,6 +26,13 @@ public class PersonalInfo {
     @SerializedName("profile_image")
     @Expose
     private String profile_image;
+    @SerializedName("emp_code")
+    @Expose
+    private String emp_code;
+    @SerializedName("department")
+    @Expose
+    private String department;
+
 
 
 
@@ -84,5 +91,21 @@ public class PersonalInfo {
 
     public void setProfile_image(String profile_image) {
         this.profile_image = profile_image;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getEmp_code() {
+        return emp_code;
+    }
+
+    public void setEmp_code(String emp_code) {
+        this.emp_code = emp_code;
     }
 }

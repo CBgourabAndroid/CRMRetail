@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.crmretail.PostInterface
 import com.crmretail.R
-import com.crmretail.modelClass.Holiday
 import com.crmretail.modelClass.OrderList
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.MyViewHolder>(){
 
@@ -56,13 +56,26 @@ class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.MyViewHolder>(){
 
     override fun onBindViewHolder(holder: MyViewHolder, listPosition: Int) {
 
-        holder.products.setText(dataList[listPosition].products.toString())
+       // holder.products.setText(dataList[listPosition].products.toString())
+       // holder.qualtities.setText(dataList[listPosition].qualtities.toString())
+
+        val prolist: List<String> = dataList[listPosition].products.toString().split(",")
+        val qunlist: List<String> = dataList[listPosition].qualtities.toString().split(",")
+
+        for (i in 0 until prolist.size){
+
+            holder.products.append(prolist[i]+"   -   "+qunlist[i])
+            holder.products.append("\n")
+
+
+        }
+
         holder.total_amount.setText("₹ "+dataList[listPosition].totalAmount.toString())
         holder.created_at.setText(dataList[listPosition].createdAt.toString())
         holder.dealerApproved.setText(dataList[listPosition].dealerApproved.toString())
         holder.orgApproved.setText(dataList[listPosition].orgApproved.toString())
         holder.received.setText(dataList[listPosition].received.toString())
-        holder.qualtities.setText(dataList[listPosition].qualtities.toString())
+
 
 
 

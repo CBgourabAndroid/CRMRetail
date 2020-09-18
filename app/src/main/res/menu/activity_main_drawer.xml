@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+
     <group android:id="@+id/nav_open_nav_home"
         android:checkableBehavior="single">
         <item
@@ -17,11 +18,25 @@
             android:title="Profile" />
     </group>
 
-    <group android:id="@+id/nav_open_nav_gallery"
+    <group android:id="@+id/nav_pjp"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Attendance" />
+            android:id="@+id/nav_prejob"
+            android:title="PJP" />
+    </group>
+
+    <group android:id="@+id/nav_ooo"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_offDuty"
+            android:title="Telephonic Order" />
+    </group>
+
+    <group android:id="@+id/nav_open_nav_send"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_send"
+            android:title="Expenses" />
     </group>
 
     <group android:id="@+id/nav_open_event"
@@ -30,12 +45,16 @@
             android:id="@+id/nav_event"
             android:title="Meeting Proposal" />
     </group>
-    <group android:id="@+id/nav_open_nav_send"
+
+    <group android:id="@+id/nav_open_nav_gallery"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_send"
-            android:title="Expenses" />
+            android:id="@+id/nav_gallery"
+            android:title="Attendance" />
     </group>
+
+
+
 
     <group android:id="@+id/nav_open_leave"
         android:checkableBehavior="single">
@@ -50,19 +69,9 @@
             android:id="@+id/nav_holoy"
             android:title="Holidays" />
     </group>
-    <group android:id="@+id/nav_ooo"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_offDuty"
-            android:title="Telephonic Order" />
-    </group>
 
-    <group android:id="@+id/nav_pjp"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_prejob"
-            android:title="Pre Job Planning" />
-    </group>
+
+
 
     <group android:id="@+id/nav_open_nav_logout"
         android:checkableBehavior="single">

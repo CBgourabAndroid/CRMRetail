@@ -39,6 +39,11 @@ class VisitMenuActivity : AppCompatActivity() {
         inti()
     }
 
+    override fun onBackPressed() {
+
+        startActivity(Intent(this, OutletVisitActivity::class.java))
+    }
+
     private fun inti() {
 
         textView6.text=intent.getStringExtra("shopName")
@@ -83,13 +88,13 @@ class VisitMenuActivity : AppCompatActivity() {
         }
         persentStock.setOnClickListener {
 
-        /*    val i1 = Intent(this, AllPlaceOrder::class.java)
+            val i1 = Intent(this, PresentStockActivity::class.java)
             i1.putExtra("shopid",intent.getStringExtra("shopid"))
             i1.putExtra("shopName", intent.getStringExtra("shopName"))
             i1.putExtra("shopAddress", intent.getStringExtra("shopAddress"))
             i1.putExtra("shopNumber", intent.getStringExtra("shopNumber"))
             i1.putExtra("type", "")
-            startActivity(i1)*/
+            startActivity(i1)
         }
 
     }

@@ -193,7 +193,7 @@ class HomeActivity : MainActivity() {
 
         addprivate.setOnClickListener {
 
-            if (CheckListAdapter.xyz.size != 0) {
+            if (CheckListAdapter.xyz.size != 0&&dataList.size==CheckListAdapter.xyz.size) {
                 //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
                 val intent = Intent(this@HomeActivity, PrivateTransActivity::class.java)
                 startActivityForResult(intent, 123)
@@ -207,7 +207,7 @@ class HomeActivity : MainActivity() {
 
          //   start_duty.visibility=View.GONE
 
-            if (CheckListAdapter.xyz.size != 0) {
+            if (CheckListAdapter.xyz.size != 0&&dataList.size==CheckListAdapter.xyz.size) {
                 //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
                 if(!PostInterface.isConnected(applicationContext)){
 
