@@ -6,7 +6,8 @@
 
     <color name="grey">#C0C0C0</color>
     <color name="logoColorOne">#0066B3</color>
-    <color name="logoColorTwo">#F36F21</color>
+    <color name="logoColorTwo">#0066b3</color>
+    <color name="logoColorthree">#F36F21</color>
     <color name="lightblue">#00B2BE</color>
     <color name="bgclr">#F0EFF5</color>
     <color name="red">#EBF11707</color>

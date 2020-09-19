@@ -281,12 +281,12 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
         rbgLayout.visibility=View.GONE
 
         if (psh.dutyType.equals("Public")){
-            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Use Public Transport For Today!!\n\n\n")
+            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Used Public Transport For Today!!\n\n\n")
             homeClick.visibility = View.VISIBLE
             homeClick.setText("Stop Duty")
         }
         else{
-            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Use Private Transport For Today!!\n\n\n")
+            txt_tv.setText("Do you want to Stop Duty for Today?\n\n\n You Have Used Private Transport For Today!!\n\n\n")
             addprivate.visibility = View.VISIBLE
             addprivate.setText("Add Details")
 
