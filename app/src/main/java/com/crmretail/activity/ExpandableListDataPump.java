@@ -15,7 +15,7 @@ public class ExpandableListDataPump {
         CEMENT.add("NOVOCO");
         CEMENT.add("ACC");
         CEMENT.add("AMBUJA");
-        CEMENT.add("BALMIA");
+        CEMENT.add("DALMIA");
         CEMENT.add("OTHERS");
 
         List<String> TMT = new ArrayList<String>();
@@ -23,8 +23,10 @@ public class ExpandableListDataPump {
         TMT.add("SHYAM STEEL");
         TMT.add("SRMB");
         TMT.add("CAPTAIN");
-        TMT.add("ELCTROL STEEL");
+        TMT.add("ELECTRO STEEL");
         TMT.add("MAGADH");
+        TMT.add("TISCON");
+        TMT.add("JSPL");
         TMT.add("KAMDHENU");
         TMT.add("BALMUKUND");
         TMT.add("MAITHON");

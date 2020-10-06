@@ -187,7 +187,7 @@ open class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSe
 
             R.id.nav_send->{
 
-                val i1 = Intent(this@MainActivity, Expenses::class.java)
+                val i1 = Intent(this@MainActivity, ExpenceListActivity::class.java)
                 startActivity(i1)
 
 

@@ -57,8 +57,8 @@ class HomeActivity : MainActivity() {
 
     lateinit var recyclerViewCategory: RecyclerView
     lateinit var categoryAdapter: MainCatAdapter
-    var names= arrayOf("Visit"
-        ,"Register",
+    var names= arrayOf("Dealer Visit"
+        ,"New Visit",
         "Brand Track","Meeting Management","Duty Planner","Stop Duty")
 
     var images= arrayOf(R.drawable.visit

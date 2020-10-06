@@ -261,8 +261,9 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 					Log.i("LocationService", "runGpsUpdate:" + runGpsUpdate);
 					while (runGpsUpdate) {
 
-						Thread.sleep(900000);
+						//Thread.sleep(900000);
 						//Thread.sleep(12*60*1000);
+						Thread.sleep(100000);
 						//Thread.sleep(10000);
 						try {
 							if (!userid.equals("")) {
@@ -277,7 +278,7 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 								reqEntity.addPart("longi", new StringBody(psh.getUserUpdatedLongitude()));
 								//reqEntity.addPart("created_at", new StringBody(currentDateTime));
 
-								Log.v("Hey still running..!!!", "After 5min Update??");
+								Log.v("Hey still running..!!!", "After 2min Update??");
 								UpdateLatLogToServer aTask = new UpdateLatLogToServer();
 								aTask.execute((Void) null);
 

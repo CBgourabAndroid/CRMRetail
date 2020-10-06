@@ -78,7 +78,7 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
 
             if (psh.dutyStatus) {
 
-                if (names!![listPosition].equals("Visit")) {
+                if (names!![listPosition].equals("Dealer Visit")) {
 
                     if (psh.areaData!=null){
 
@@ -103,7 +103,7 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
                     context!!.startActivity(Intent(context, DutyPlaner::class.java))
                 }
 
-                else if (names!![listPosition].equals("Register")){
+                else if (names!![listPosition].equals("New Visit")){
 
                     context!!.startActivity(Intent(context, NewRegisterActivity::class.java))
                 }

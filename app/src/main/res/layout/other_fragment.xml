@@ -113,7 +113,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:background="#00000000"
-                                android:focusable="false"
+                                android:inputType="number"
                                 android:hint="Enter expense amount"
                                 />
 

@@ -17,8 +17,8 @@ public class MyApplication : Application() {
         super.onCreate()
 
 
-        val intent = Intent(this, GoogleService::class.java)
-        startService(intent)
+        //val intent = Intent(this, GoogleService::class.java)
+        //startService(intent)
 
 
         //var msg=getDAAAA()

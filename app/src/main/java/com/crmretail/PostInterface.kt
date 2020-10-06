@@ -418,6 +418,13 @@ interface PostInterface {
         @Field("customer_id") customer_id: String
     ): Call<OrderListResponse>
 
+    @FormUrlEncoded
+    @POST("my-bill")
+    fun getexpenceList(
+        @Header("Authorization") token: String,
+        @Field("id") user_id: String
+    ): Call<ExpenceListResponse>
+
 
 
 

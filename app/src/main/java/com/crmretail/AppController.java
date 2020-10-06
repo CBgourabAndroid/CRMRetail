@@ -53,8 +53,8 @@ public class AppController extends Application {
         ourInstance = this;
 
 
-        Intent intent = new Intent(this, GoogleService.class);
-        startService(intent);
+       // Intent intent = new Intent(this, GoogleService.class);
+        //startService(intent);
 
 
         LocalBroadcastManager.getInstance(this).registerReceiver(

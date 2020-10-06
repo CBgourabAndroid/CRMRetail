@@ -2,6 +2,7 @@ package com.crmretail.activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -58,6 +59,14 @@ class Expenses : AppCompatActivity() {
 
         verifyStoragePermissions(this)
         inti()
+    }
+
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra("isOk", "ok")
+        setResult(123, intent)
+        finish()
     }
 
     fun verifyStoragePermissions(activity: Activity) {
