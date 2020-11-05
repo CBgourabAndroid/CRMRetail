@@ -210,6 +210,8 @@ class SplashScreen : AppCompatActivity() {
                     if (report.areAllPermissionsGranted()) {
                         // Toast.makeText(getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
                         // ScanFinction();
+
+
                         if (UserShared(this@SplashScreen).getLoggedInStatus()) {
 
 

@@ -153,23 +153,16 @@ class HomeActivity : MainActivity() {
         val radGrp=dialogView.findViewById<RadioGroup>(R.id.rbgrp)
         val checkListLayout=dialogView.findViewById<LinearLayout>(R.id.checkListLay)
 
-        val recycler_view: RecyclerView =
-            dialogView.findViewById(R.id.my_recycler_view) as RecyclerView
         val alert = dialogBuilder.create()
         alert.show()
-        dataList=ArrayList()
-        loadData()
 
-        checkListLayout.visibility=View.VISIBLE
-        recycler_view.setLayoutManager(GridLayoutManager(this, 2))
-        recycler_view.setItemAnimator(DefaultItemAnimator())
+    //    loadData()
 
-        adapter = CheckListAdapter(this, dataList
-        )
-        recycler_view.setAdapter(adapter)
+
 
         txt_tv.setText(currentDate)
         getLastLocation()
+        checkListLayout.visibility=View.VISIBLE
 
         radGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(arg0: RadioGroup?, id: Int) {
@@ -193,39 +186,44 @@ class HomeActivity : MainActivity() {
 
         addprivate.setOnClickListener {
 
-            if (CheckListAdapter.xyz.size != 0&&dataList.size==CheckListAdapter.xyz.size) {
+          /*  if (CheckListAdapter.xyz.size != 0&&dataList.size==CheckListAdapter.xyz.size) {
                 //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
-                val intent = Intent(this@HomeActivity, PrivateTransActivity::class.java)
-                startActivityForResult(intent, 123)
-                alert.dismiss()
+                CheckListAdapter.xyz.clear()
+
             } else {
-                Toast.makeText(this,"Please provide checklist details!!",Toast.LENGTH_SHORT).show()
-            }
+                Toast.makeText(this,"Please provide items details,which you have!!",Toast.LENGTH_SHORT).show()
+            }*/
+            val intent = Intent(this@HomeActivity, PrivateTransActivity::class.java)
+            startActivityForResult(intent, 123)
+            alert.dismiss()
         }
 
         homeClick.setOnClickListener {
 
          //   start_duty.visibility=View.GONE
+/*
 
             if (CheckListAdapter.xyz.size != 0&&dataList.size==CheckListAdapter.xyz.size) {
                 //      replaceFragment(new NearByMapFragment(tabLayout,Latitude,Longtitude,xyz));
-                if(!PostInterface.isConnected(applicationContext)){
 
-                    Toast.makeText(applicationContext, applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
-                }
-                else{
-
-                    progressDialog.setMessage("Please wait ...")
-                    progressDialog.setCancelable(false)
-                    progressDialog.show()
-                    callStartDuty("Public")
-
-                }
-                alert.dismiss()
             } else {
-                Toast.makeText(this,"Please provide checklist details!!",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Please provide items details,which you have!!",Toast.LENGTH_SHORT).show()
             }
+*/
 
+            if(!PostInterface.isConnected(applicationContext)){
+
+                Toast.makeText(applicationContext, applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+            }
+            else{
+
+                progressDialog.setMessage("Please wait ...")
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+                callStartDuty("Public")
+
+            }
+            alert.dismiss()
 
 
            // startActivity(Intent(this@BookAppointment, HomeActivity::class.java))

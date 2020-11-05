@@ -96,9 +96,9 @@ class AddFoodingDetails : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.spinner)
         take_Pic.setOnClickListener {
 
-            //verifyStoragePermissions(this)
+            verifyStoragePermissions(this)
 
-            takePICTURE()
+
         }
 
         saveData.setOnClickListener {
@@ -310,17 +310,17 @@ class AddFoodingDetails : AppCompatActivity() {
             )
         }
         else{
-            selectImage()
+            takePICTURE()
         }
     }
 
-    private fun selectImage() {
+    /*private fun selectImage() {
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_CAMERA)
 
 
-    }
+    }*/
 
    /* @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

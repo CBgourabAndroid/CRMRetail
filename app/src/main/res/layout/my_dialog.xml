@@ -41,7 +41,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:layout_gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/holo_green_dark"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +60,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CheckList"
+                android:text="Make sure you have taken hand sanitizer, official documents,water bottle and also wired mask"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/colorAccent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/logoColorOne"
                 android:textSize="15sp"
                 android:textStyle="bold"
                  />
@@ -71,7 +73,7 @@
                 android:id="@+id/my_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:visibility="gone"/>
         </LinearLayout>
 
 

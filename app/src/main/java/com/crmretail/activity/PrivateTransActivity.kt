@@ -26,16 +26,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
 import com.crmretail.SplashScreen
 import com.crmretail.modelClass.GeneralResponce
 import com.crmretail.shared.UserShared
+import com.crmretail.utils.Utility
 import com.google.android.material.textfield.TextInputEditText
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.add_traveldata.*
 import kotlinx.android.synthetic.main.contain_private_trans.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.launch
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
@@ -84,6 +88,9 @@ class PrivateTransActivity : AppCompatActivity() {
     lateinit var prefss: SharedPreferences
     lateinit var toolbar: Toolbar
 
+
+    private var actualImage: File? = null
+    private var compressedImage: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,7 +167,9 @@ class PrivateTransActivity : AppCompatActivity() {
 
         take_Pic.setOnClickListener {
 
-            takePICTURE()
+            verifyStoragePermissions(this)
+
+
         }
 
         submitFooding.setOnClickListener {
@@ -205,7 +214,7 @@ class PrivateTransActivity : AppCompatActivity() {
             )
         }
         else{
-           // selectImage()
+            takePICTURE()
         }
     }
 
@@ -227,7 +236,7 @@ class PrivateTransActivity : AppCompatActivity() {
             cancel = true
             tempCond = false
         }
-        if (photoFile==null) {
+        if (compressedImage==null) {
             message = "Please Provide Supporting Image"
             focusView = tansKM
             cancel = true
@@ -269,10 +278,10 @@ class PrivateTransActivity : AppCompatActivity() {
 
                 reqEntity!!.addPart("st_km", StringBody(privateTransKm))
 
-                dl_upload_file = photoFile!!.absoluteFile
-                reqEntity!!.addPart("file_url_1", FileBody(dl_upload_file))
+              //  dl_upload_file = Utility.saveBitmapToFile(photoFile!!.absoluteFile)
+               // reqEntity!!.addPart("file_url_1", FileBody(dl_upload_file))
 
-
+                reqEntity!!.addPart("file_url_1", FileBody(compressedImage))
 
 
 
@@ -429,7 +438,7 @@ class PrivateTransActivity : AppCompatActivity() {
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+   /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            val takenImage = data?.extras?.get("data") as Bitmap
             val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
@@ -438,6 +447,49 @@ class PrivateTransActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
 
+    }*/
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+//            val takenImage = data?.extras?.get("data") as Bitmap
+            //  val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //   foodPic.setImageBitmap(takenImage)
+            actualImage=photoFile
+            // val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //   foodPic.setImageBitmap(takenImage)
+            // actualImageView.setImageBitmap(takenImage)
+            // actualSizeTextView.text = String.format("Size : %s", getReadableFileSize(actualImage!!.length()))
+            compressImage()
+
+        } else {
+
+            compressedImage=null
+        }
+
+    }
+
+    private fun compressImage() {
+        actualImage?.let { imageFile ->
+            lifecycleScope.launch {
+                // Default compression
+                compressedImage = Compressor.compress(this@PrivateTransActivity, imageFile)
+                setCompressedImage()
+            }
+        } ?: showError("Please choose an image!")
+    }
+
+    private fun showError(errorMessage: String) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setCompressedImage() {
+        compressedImage?.let {
+            foodPic.setImageBitmap(BitmapFactory.decodeFile(it.absolutePath))
+            // compressedSizeTextView.text = String.format("Size : %s", getReadableFileSize(it.length()))
+            //Toast.makeText(this, "Compressed image save in " + it.path, Toast.LENGTH_LONG).show()
+            //  Log.d("Compressor", "Compressed image save in " + it.path)
+        }
     }
 
 

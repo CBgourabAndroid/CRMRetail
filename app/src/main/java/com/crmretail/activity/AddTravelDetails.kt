@@ -143,7 +143,7 @@ class AddTravelDetails :AppCompatActivity() {
 
         take_Pic.setOnClickListener {
 
-            takePICTURE()
+            verifyStoragePermissions(this)
         }
 
         saveData.setOnClickListener {
@@ -187,7 +187,7 @@ class AddTravelDetails :AppCompatActivity() {
             )
         }
         else{
-            selectImage()
+            takePICTURE()
         }
     }
 
