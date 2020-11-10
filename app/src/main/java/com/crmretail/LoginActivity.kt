@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.crmretail.PostInterface
@@ -29,6 +30,13 @@ import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.gson.Gson
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.DexterError
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.PermissionRequestErrorListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,6 +75,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
     private var googleApiClient: GoogleApiClient? = null
     val REQUEST_CHECK_SETTINGS = 0x1
+    var flag: Boolean?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -211,6 +220,76 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
         forgotPassword.setOnClickListener(this)
 
 
+        requestPermission()
+
+
+    }
+
+    private fun requestPermission() {
+        Dexter.withActivity(this)
+            .withPermissions(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.CAMERA
+
+
+
+            )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    // check if all permissions are granted
+                    if (report.areAllPermissionsGranted()) {
+                         Toast.makeText(getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
+                        // ScanFinction();
+
+                        flag=true
+
+
+                    }
+
+                    // check for permanent denial of any permission
+                    if (report.isAnyPermissionPermanentlyDenied()) {
+                        // show alert dialog navigating to Settings
+                        //Toast.makeText(getApplicationContext(), "All permissions are Denied!", Toast.LENGTH_SHORT).show();
+                        showSettingsDialog()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {
+                    token.continuePermissionRequest()
+                }
+            }).withErrorListener(object : PermissionRequestErrorListener {
+                override fun onError(error: DexterError) {
+                    Toast.makeText(applicationContext, "Error occurred! " + error.toString(), Toast.LENGTH_SHORT).show()
+                }
+            })
+            .onSameThread()
+            .check()
+    }
+
+    private fun showSettingsDialog() {
+
+
+
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        dialogBuilder.setTitle("Need Permissions")
+        dialogBuilder.setMessage("This app needs permission to use this feature. You can grant them in app settings.")
+        dialogBuilder.setPositiveButton("GOTO SETTINGS", { dialog, whichButton ->
+
+
+            dialog.dismiss()
+            //openSettings()
+            requestPermission()
+        })
+        dialogBuilder.setNegativeButton("Cancel", { dialog, whichButton ->
+
+
+
+            dialog.dismiss()
+        })
+        val b = dialogBuilder.create()
+        b.show()
     }
 
 
@@ -222,8 +301,14 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
             R.id.logintxt->{
 
+                if (flag==true){
 
-                validation()
+                    validation()
+                }
+                else{
+                    requestPermission()
+                }
+
 
             }
 
@@ -285,7 +370,8 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
         if (LATSTR==null&& LONGSTR==null||LATSTR.equals("0.0")&&LONGSTR.equals("0.0")){
             message = "Please check your GPS"
-
+            cancel = true
+            tempCond = false
 
         }
 

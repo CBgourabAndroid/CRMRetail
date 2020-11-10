@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
@@ -12,6 +13,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
+import android.view.Menu
+import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -21,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import com.activity.LoginActivity
 import com.crmretail.activity.HomeActivity
 import com.crmretail.shared.PrefManager
+import com.crmretail.shared.Updatedlatlong
 import com.crmretail.shared.UserShared
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.PendingResult
@@ -34,6 +39,7 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class SplashScreen : AppCompatActivity() {
@@ -47,21 +53,29 @@ class SplashScreen : AppCompatActivity() {
     lateinit var prefManager: PrefManager
     var locationManager: LocationManager? = null
     var GpsStatus = false
+    lateinit var psh:UserShared
+    var pshlat: Updatedlatlong? = null
+    var prefsll: SharedPreferences? = null
     internal val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
 
+            CheckGpsStatus()
+
             // val intent = Intent(applicationContext, MainActivity::class.java)
             //startActivity(intent)
-            if (prefManager.isFirstTimeLaunch) {
+         /*   if (prefManager.isFirstTimeLaunch) {
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P){
+                CheckGpsStatus()
+
+              *//*  *//**//*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P){
 
                     requestLocationPermission()
                 }
                 else{
-                    requestPermission()
-                }
 
+                }*//**//*
+
+                requestPermission()
 
               //
 
@@ -77,11 +91,12 @@ class SplashScreen : AppCompatActivity() {
 
                     startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
                     finish()
-                }
+                }*//*
+           //     requestPermission()
 
 
             }
-
+*/
         }
 
 
@@ -100,6 +115,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.splash_screen)
 
         prefManager = PrefManager(this)
+        psh= UserShared(this)
 
 
         /*  //4second splash time
@@ -127,10 +143,7 @@ class SplashScreen : AppCompatActivity() {
         GpsStatus = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         if (GpsStatus == true) {
            // textview.setText("GPS Is Enabled")
-            mDelayHandler = Handler()
-
-            //Navigate with delay
-            mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
+          requestPermission()
         } else {
           //  Toast.makeText(getApplicationContext(), "GPS Is Disabled", Toast.LENGTH_SHORT).show()
            // textview.setText("GPS Is Disabled")
@@ -200,7 +213,9 @@ class SplashScreen : AppCompatActivity() {
     private fun requestPermission() {
         Dexter.withActivity(this)
             .withPermissions(
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.CAMERA
 
 
             )
@@ -210,11 +225,18 @@ class SplashScreen : AppCompatActivity() {
                     if (report.areAllPermissionsGranted()) {
                         // Toast.makeText(getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
                         // ScanFinction();
-
-
                         if (UserShared(this@SplashScreen).getLoggedInStatus()) {
 
 
+                            if (psh.dutyStatus){
+
+                                startLocationService()
+                            }
+                            else{
+
+                                stopLocationService()
+
+                            }
                             startActivity(Intent(this@SplashScreen, HomeActivity::class.java))
                             finish()
                         } else {
@@ -222,6 +244,8 @@ class SplashScreen : AppCompatActivity() {
                             startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
                             finish()
                         }
+
+
                     }
 
                     // check for permanent denial of any permission
@@ -244,6 +268,21 @@ class SplashScreen : AppCompatActivity() {
             .check()
     }
 
+
+    open fun stopLocationService() {
+        pshlat = Updatedlatlong(applicationContext)
+        Log.i("GPSTRACKER", "called stopLocationService from application")
+        stopService(Intent(this, LocationUpdate::class.java))
+        prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
+    }
+
+    open fun startLocationService() {
+        pshlat = Updatedlatlong(applicationContext)
+        Log.i("GPSTRACKER", "called startLocationService from application")
+        startService(Intent(this, LocationUpdate::class.java))
+        prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
+    }
+
     private fun showSettingsDialog() {
 
 
@@ -256,7 +295,8 @@ class SplashScreen : AppCompatActivity() {
 
 
             dialog.dismiss()
-            openSettings()
+            //openSettings()
+            requestPermission()
         })
         dialogBuilder.setNegativeButton("Cancel", { dialog, whichButton ->
 
@@ -294,12 +334,9 @@ class SplashScreen : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode == Activity.RESULT_OK) {
-               // Toast.makeText(applicationContext, "GPS enabled", Toast.LENGTH_LONG).show()
-                mDelayHandler = Handler()
+                Toast.makeText(applicationContext, "GPS enabled", Toast.LENGTH_LONG).show()
 
-                //Navigate with delay
-                mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
-
+             requestPermission()
             } else {
                 finish()
             }

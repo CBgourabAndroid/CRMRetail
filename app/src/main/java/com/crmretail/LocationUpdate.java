@@ -248,198 +248,7 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 	private String userid = "";
 
 
-	private void myThread1() {
 
-		prefs1 = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-		prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
-
-		Thread th = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					Log.i("LocationService", "runGpsUpdate:" + runGpsUpdate);
-					while (runGpsUpdate) {
-
-						//Thread.sleep(900000);
-						//Thread.sleep(12*60*1000);
-						Thread.sleep(100000);
-						//Thread.sleep(10000);
-						try {
-							if (!userid.equals("")) {
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-								String currentDateTime = sdf.format(new Date());
-								pshuser = new UserShared(getApplicationContext());
-								psh = new Updatedlatlong(getApplicationContext());
-								reqEntity = null;
-								reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-								reqEntity.addPart("user_id", new StringBody(pshuser.getId()));
-								reqEntity.addPart("lati", new StringBody(psh.getUserUpdatedLatitude()));
-								reqEntity.addPart("longi", new StringBody(psh.getUserUpdatedLongitude()));
-								//reqEntity.addPart("created_at", new StringBody(currentDateTime));
-
-								Log.v("Hey still running..!!!", "After 2min Update??");
-								UpdateLatLogToServer aTask = new UpdateLatLogToServer();
-								aTask.execute((Void) null);
-
-
-
-								//checkLogoutAsyncToServer();
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}; //End of thread class
-
-		th.start();
-
-
-
-
-
-	}
-
-
-	private void myThread2() {
-
-		prefs1 = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-		prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
-		Thread th = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					Log.i("LocationService", "runGpsUpdate:" + runGpsUpdate);
-					while (runGpsUpdate) {
-
-						Thread.sleep(900000);
-						//Thread.sleep(12*60*1000);
-						//Thread.sleep(10000);
-						try {
-							if (!userid.equals("")) {
-								/*pshuser = new UserShared(getApplicationContext());
-								psh = new Updatedlatlong(getApplicationContext());
-								reqEntity = null;*/
-								for (int i = 0; i <locationData.size() ; i++) {
-
-									reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-									reqEntity.addPart("user_id", new StringBody(locationData.get(i).getuserId()));
-									reqEntity.addPart("lati", new StringBody(locationData.get(i).getuserLAT()));
-									reqEntity.addPart("longi", new StringBody(locationData.get(i).getuserLONG()));
-								//	reqEntity.addPart("created_at",new StringBody(locationData.get(i).getdatetime()));
-
-									Log.v("Hey still running..!!!", "Agree now??");
-									lastUpdatedPos=i;
-									Log.v("LastUpdate Postion",String.valueOf(i));
-									UpdateLatLogToServer aTask = new UpdateLatLogToServer();
-									aTask.execute((Void) null);
-								}
-
-
-								//checkLogoutAsyncToServer();
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}; //End of thread class
-
-		th.start();
-
-	}
-
-
-	public void myThread() {
-		prefs1 = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-		prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
-		Thread th = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					Log.i("LocationService", "runGpsUpdate:" + runGpsUpdate);
-					while (runGpsUpdate) {
-						//Thread.sleep(18000);
-
-						//	boolean loginStatus = prefs.getBoolean(getString(R.string.shared_loggedin_status_user), false);
-
-						Log.i("LocationService", String.valueOf(loginStatus));
-						if (!loginStatus) {
-							pshuser = new UserShared(getApplicationContext());
-							psh = new Updatedlatlong(getApplicationContext());
-							runGpsUpdate = false;
-							lat = "0.0";
-							lon = "0.0";
-							reqEntity = null;
-
-							reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-							reqEntity.addPart("user_id", new StringBody(pshuser.getId()));
-							reqEntity.addPart("lati", new StringBody(lat));
-							reqEntity.addPart("longi", new StringBody(lon));
-
-							////
-
-							UpdateLatLogToServer aTask = new UpdateLatLogToServer();
-							aTask.execute((Void) null);
-							break;
-						}
-						Thread.sleep(3000);
-						//Thread.sleep(12*60*1000);
-						//Thread.sleep(10000);
-						try {
-							if (!userid.equals("")) {
-								pshuser = new UserShared(getApplicationContext());
-								psh = new Updatedlatlong(getApplicationContext());
-								//reqEntity = null;
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-								String currentDateTime = sdf.format(new Date());
-								reqEntity.addPart("user_id", new StringBody(userid));
-								reqEntity.addPart("lati", new StringBody(psh.getUserUpdatedLatitude()));
-								reqEntity.addPart("longi", new StringBody(psh.getUserUpdatedLongitude()));
-								//reqEntity.addPart("created_at", new StringBody(currentDateTime));
-
-								Log.v("Hey still running..!!!", "Save Data??");
-								UpdateLatLogToServer aTask = new UpdateLatLogToServer();
-								aTask.execute((Void) null);
-								//2020-06-17 20:15:45
-
-							/*	LocationData data=new LocationData();
-								data.setuserId(pshuser.getId());
-								data.setuserLAT(psh.getUserUpdatedLatitude());
-								data.setuserLONG(psh.getUserUpdatedLongitude());
-								data.setdatetime(psh.getUserUpdatedtime());
-								locationData.add(data);*/
-
-
-								//checkLogoutAsyncToServer();
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}; //End of thread class
-
-		th.start();
-	}//End of myThread()
 
 
 
@@ -455,7 +264,7 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 		mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 		mLocationRequest.setInterval(LOCATION_INTERVAL);
 		mLocationRequest.setFastestInterval(LOCATION_INTERVAL);
-		startLocationUpates();
+		//startLocationUpates();
 	}
 
 
@@ -510,11 +319,13 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 
 		mm();
 		myThread1();
+
 	}
 
 	private void mm() {
 		try {
-			if (!userid.equals("")) {
+			if (!userid.equals("")&&psh.getUserUpdatedLatitude().equals("0.0")||!psh.getUserUpdatedLatitude().equals("")
+					&&psh.getUserUpdatedLongitude().equals("0.0")||!psh.getUserUpdatedLongitude().equals("")) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 				String currentDateTime = sdf.format(new Date());
 				pshuser = new UserShared(getApplicationContext());
@@ -538,6 +349,77 @@ public class LocationUpdate extends Service implements GoogleApiClient.Connectio
 			e.printStackTrace();
 		}
 	}
+
+	private void myThread1() {
+
+		prefs1 = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+		prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
+
+		Thread th = new Thread() {
+
+			@Override
+			public void run() {
+				try {
+					Log.i("LocationService", "runGpsUpdate:" + runGpsUpdate);
+					while (runGpsUpdate) {
+
+						//Thread.sleep(900000);
+						//Thread.sleep(12*60*1000);
+						Thread.sleep(100000);
+						//Thread.sleep(10000);
+						try {
+							if (!userid.equals("")&&psh.getUserUpdatedLatitude().equals("0.0")||!psh.getUserUpdatedLatitude().equals("")
+									&&psh.getUserUpdatedLongitude().equals("0.0")||!psh.getUserUpdatedLongitude().equals("")) {
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+								String currentDateTime = sdf.format(new Date());
+								pshuser = new UserShared(getApplicationContext());
+								psh = new Updatedlatlong(getApplicationContext());
+								reqEntity = null;
+								reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+								reqEntity.addPart("user_id", new StringBody(pshuser.getId()));
+								reqEntity.addPart("lati", new StringBody(psh.getUserUpdatedLatitude()));
+								reqEntity.addPart("longi", new StringBody(psh.getUserUpdatedLongitude()));
+								//reqEntity.addPart("created_at", new StringBody(currentDateTime));
+
+
+								if (pshuser.getDutyStatus()){
+									Log.v("Hey still running..!!!", "After 2min Update??");
+									UpdateLatLogToServer aTask = new UpdateLatLogToServer();
+									aTask.execute((Void) null);
+
+								}
+								else{
+
+									Log.v("Hey still running..!!!", "But i am off duty??");
+
+								}
+
+
+
+
+								//checkLogoutAsyncToServer();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}; //End of thread class
+
+		th.start();
+
+
+
+
+
+	}
+
+
 
 
 /*	@Override

@@ -24,7 +24,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.MainActivity
@@ -35,7 +34,6 @@ import com.crmretail.adapter.CheckListAdapter
 import com.crmretail.adapter.MainCatAdapter
 import com.crmretail.modelClass.CheckList
 import com.crmretail.modelClass.GeneralResponce
-import com.crmretail.modelClass.ProductInfo
 import com.crmretail.shared.Updatedlatlong
 import com.crmretail.shared.UserShared
 import com.google.android.gms.location.*
@@ -50,7 +48,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeActivity : MainActivity() {
@@ -85,7 +82,7 @@ class HomeActivity : MainActivity() {
         psh=UserShared(this)
         latPsh=Updatedlatlong(this)
         prefss = getSharedPreferences("MY_SHARED_PREF", Context.MODE_PRIVATE)
-
+        prefs = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
         //openOnDuty()
 
         recyclerViewCategory=findViewById(R.id.category_view)
@@ -103,7 +100,7 @@ class HomeActivity : MainActivity() {
         if (psh.dutyStatus){
 
             start_duty.visibility=View.GONE
-            startLocationService()
+            //startLocationService()
             val nav_Menu: Menu = navView.getMenu()
             nav_Menu.findItem(R.id.nav_logout).setVisible(false)
         }
@@ -120,7 +117,15 @@ class HomeActivity : MainActivity() {
 
         start_duty.setOnClickListener {
 
-            showDialogS(LATSTR,LONGSTR)
+            if (LATSTR.equals("")||LATSTR.equals("0.0")){
+
+                Toast.makeText(this,"Please Check Location Permission!!",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                showDialogS(LATSTR,LONGSTR)
+            }
+
+
         }
 
 
@@ -330,6 +335,20 @@ class HomeActivity : MainActivity() {
                         editor.putBoolean(getString(R.string.shared_duty_status), true)
                         editor.putString(getString(R.string.shared_duty_type), dutyType)
                         editor.commit()
+
+
+                        //	Toast.makeText(getApplicationContext(), String.valueOf(currentLat), Toast.LENGTH_SHORT).show();
+                        val editor1 = prefs.edit()
+                        editor1.putString(
+                            getString(R.string.shared_updated_lat),
+                            LATSTR
+                        )
+                        editor1.putString(
+                            getString(R.string.shared_updated_long),
+                            LONGSTR
+                        )
+                        editor1.commit()
+
                         val nav_Menu: Menu = navView.getMenu()
                         nav_Menu.findItem(R.id.nav_logout).setVisible(false)
                         startLocationService()

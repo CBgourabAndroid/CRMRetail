@@ -26,6 +26,7 @@ import sun.bob.mcalendarview.MCalendarView
 import sun.bob.mcalendarview.MarkStyle
 import sun.bob.mcalendarview.listeners.OnDateClickListener
 import sun.bob.mcalendarview.vo.DateData
+import sun.bob.mcalendarview.vo.MarkedDates
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +37,7 @@ class AttendanceActivity: AppCompatActivity() {
     lateinit var psh:UserShared
     lateinit var progressDialog:ProgressDialog
     var im_back: ImageView? = null
-    lateinit var dataList:ArrayList<Duty>
+    var dataList:ArrayList<Duty>?=null
     var ly_left: LinearLayout? = null
     var ly_right: LinearLayout? = null
     private var selectedDate: DateData? = null
@@ -52,10 +53,11 @@ class AttendanceActivity: AppCompatActivity() {
         setContentView(R.layout.attendance_activity)
         psh= UserShared(this)
         progressDialog=ProgressDialog(this)
-
+        cacheDir.deleteRecursively()
         init()
         im_back!!.setOnClickListener { finish() }
 
+        dataList= ArrayList()
 
         if(!PostInterface.isConnected(this@AttendanceActivity)){
 
@@ -89,6 +91,8 @@ class AttendanceActivity: AppCompatActivity() {
         calendarView.markDate(selectedDate)
 
 
+
+
         /*calendarView.markDate(DateData( 2020,8,14).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
             Color.parseColor("#EBF11707"))))*/
 
@@ -103,6 +107,15 @@ class AttendanceActivity: AppCompatActivity() {
 
 
         calendarView=findViewById(R.id.calendar)
+
+    /*    val markedDates: MarkedDates = calendarView.markedDates
+        val markData: java.util.ArrayList<DateData>? = markedDates.getAll()
+        if (markData != null) {
+            for (k in 0 until markData.size) {
+                calendarView.unMarkDate(markData.get(k))
+            }
+        }*/
+
 
         // calendarView.setDateCell(R.layout.layout_date_cell).setMarkedCell(R.layout.layout_mark_cell);
 
@@ -135,15 +148,10 @@ class AttendanceActivity: AppCompatActivity() {
                     val statusCode = response.code()
                     val avv = response.body()!!.duties
                     Log.i("onSuccess", avv.toString());
-                    if (avv.size === 0) {
-
-                    } else {
-
-                    }
 
                     if (avv.size>0) {
 
-                        dataList= ArrayList()
+
 
                         for (j in 0 until avv.size){
 
@@ -153,14 +161,14 @@ class AttendanceActivity: AppCompatActivity() {
                             model.dutyEnd=avv[j].dutyEnd
                             model.dutyTime=avv[j].dutyTime
                             model.remarks=avv[j].remarks
-                            dataList.add(model)
+                            dataList!!.add(model)
 
 
 
                         }
 
 
-                        setData(dataList)
+                        setData()
 
 
 
@@ -188,13 +196,15 @@ class AttendanceActivity: AppCompatActivity() {
         })
     }
 
-    private fun setData(dataList: ArrayList<Duty>) {
+    private fun setData() {
 
+      /*  val markedDates = calendarView.markedDates
+        val markData = markedDates.all
+        for (k in 0 until markData.size) {
+            calendarView.unMarkDate(markData.get(k))
+        }*/
 
-
-
-
-        for (i in 0 until dataList.size) {
+        for (i in 0 until dataList!!.size) {
             /*calendarView.markDate(
                 PostInterface.format_date6(dataList[i].dutyDate).toInt(),
                 PostInterface.format_date5(dataList[i].dutyDate).toInt(),
@@ -205,26 +215,26 @@ class AttendanceActivity: AppCompatActivity() {
 
 
 
-                    if (dataList[i].remarks.equals("Present")){
-                        calendarView.markDate(DateData( PostInterface.format_date6(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date5(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date4(dataList[i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
+                    if (dataList!![i].remarks.equals("Present")){
+                        calendarView.markDate(DateData( PostInterface.format_date6(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date5(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date4(dataList!![i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
                             Color.parseColor("#1A951F"))))
 
                     }
-                  else if (dataList[i].remarks.equals("Absent")){
+                  else if (dataList!![i].remarks.equals("Absent")){
 
-                        calendarView.markDate(DateData( PostInterface.format_date6(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date5(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date4(dataList[i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
+                        calendarView.markDate(DateData( PostInterface.format_date6(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date5(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date4(dataList!![i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
                             Color.parseColor("#EBF11707"))))
 
                     }
-                    else if (dataList[i].remarks.equals("Half Day")){
+                    else if (dataList!![i].remarks.equals("Half Day")){
 
-                        calendarView.markDate(DateData( PostInterface.format_date6(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date5(dataList[i].dutyDate).toInt(),
-                            PostInterface.format_date4(dataList[i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
+                        calendarView.markDate(DateData( PostInterface.format_date6(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date5(dataList!![i].dutyDate).toInt(),
+                            PostInterface.format_date4(dataList!![i].dutyDate).toInt()).setMarkStyle(MarkStyle(MarkStyle.BACKGROUND,
                             Color.parseColor("#F36F21"))))
 
                     }
@@ -308,20 +318,20 @@ class AttendanceActivity: AppCompatActivity() {
         var dd=""
 
 
-        for (i in 0 until dataList.size) {
+        for (i in 0 until dataList!!.size) {
 
-            val jjj=dataList[i].dutyDate.toString()
+            val jjj=dataList!![i].dutyDate.toString()
 
 
 
 
             if (StrDate.equals(jjj)){
-                aa=dataList[i].dutyStart.toString()
-                bb=dataList[i].dutyEnd.toString()
-                cc=dataList[i].dutyTime.toString()+"hr"
-                dd=dataList[i].remarks.toString()
+                aa=dataList!![i].dutyStart.toString()
+                bb=dataList!![i].dutyEnd.toString()
+                cc=dataList!![i].dutyTime.toString()+"hr"
+                dd=dataList!![i].remarks.toString()
 
-                val sss=dataList[i].dutyEnd.toString()
+                val sss=dataList!![i].dutyEnd.toString()
 
                   if (!sss.equals("")){
                       showMP(StrDate,aa,bb,cc,dd)

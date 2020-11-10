@@ -12,9 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.crmretail.PostInterface
-import com.crmretail.R
-import com.crmretail.SplashScreen
+import com.crmretail.*
 import com.crmretail.activity.*
 import com.crmretail.modelClass.GeneralResponce
 import com.crmretail.shared.Updatedlatlong
@@ -25,7 +23,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
+open class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
 
     lateinit var context: Context
     lateinit var names: Array<String>
@@ -353,6 +351,7 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
                         val editor = prefss.edit()
                         editor.putBoolean(context.getString(R.string.shared_duty_status), false)
                         editor.commit()
+                        stopLocationService()
                         context.startActivity(Intent(context, HomeActivity::class.java))
 
 
@@ -387,6 +386,22 @@ class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
             }
         })
 
+    }
+    var pshlat: Updatedlatlong? = null
+    var prefsll: SharedPreferences? = null
+
+
+    open fun stopLocationService() {
+        pshlat = Updatedlatlong(context)
+        Log.i("GPSTRACKER", "called stopLocationService from application")
+        context.stopService(Intent(context, LocationUpdate::class.java))
+        prefsll = context.getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
+    }
+    open fun startLocationService() {
+        pshlat = Updatedlatlong(context)
+        Log.i("GPSTRACKER", "called startLocationService from application")
+        context.startService(Intent(context, LocationUpdate::class.java))
+        prefsll = context.getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
 
 

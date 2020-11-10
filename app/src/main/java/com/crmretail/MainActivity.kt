@@ -291,6 +291,7 @@ open class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSe
                         val editor = myPrefs.edit()
                         editor.clear()
                         editor.apply()
+                        cacheDir.deleteRecursively()
 
 
                         val intent = Intent(this@MainActivity, SplashScreen::class.java)
