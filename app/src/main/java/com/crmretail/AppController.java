@@ -88,7 +88,7 @@ public class AppController extends Application {
 
         psh=new Updatedlatlong(getApplicationContext());
         Log.i("GPSTRACKER", "called startLocationService from application");
-        stopService(new Intent(this,LocationUpdate.class));
+        stopService(new Intent(this,LocationMonitoringService.class));
 
         prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
     }
@@ -99,7 +99,7 @@ public class AppController extends Application {
     public void startLocationService(){
         psh=new Updatedlatlong(getApplicationContext());
         Log.i("GPSTRACKER", "called startLocationService from application");
-        startService(new Intent(this, LocationUpdate.class));
+        startService(new Intent(this, LocationMonitoringService.class));
 
         prefs = getSharedPreferences("LATLONG_SHARED_PREF", MODE_PRIVATE);
     }

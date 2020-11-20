@@ -99,6 +99,9 @@ class NewRegisterActivity : AppCompatActivity() {
     var minute = calendar.get(Calendar.MINUTE)
     lateinit var datePickerDialog: DatePickerDialog
 
+    private var actualImage: File? = null
+    private var compressedImage: File? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 21) {

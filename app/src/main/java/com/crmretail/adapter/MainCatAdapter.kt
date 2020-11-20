@@ -394,13 +394,13 @@ open class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
     open fun stopLocationService() {
         pshlat = Updatedlatlong(context)
         Log.i("GPSTRACKER", "called stopLocationService from application")
-        context.stopService(Intent(context, LocationUpdate::class.java))
+        context.stopService(Intent(context, LocationMonitoringService::class.java))
         prefsll = context.getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
     open fun startLocationService() {
         pshlat = Updatedlatlong(context)
         Log.i("GPSTRACKER", "called startLocationService from application")
-        context.startService(Intent(context, LocationUpdate::class.java))
+        context.startService(Intent(context, LocationMonitoringService::class.java))
         prefsll = context.getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
 

@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.crmretail.AppController
 import com.crmretail.PostInterface
 import com.crmretail.R
@@ -33,8 +34,10 @@ import com.crmretail.modelClass.GeneralResponce
 import com.crmretail.shared.UserShared
 import com.google.android.gms.location.*
 import com.google.android.material.textfield.TextInputEditText
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.add_traveldata.*
 import kotlinx.android.synthetic.main.contain_private_trans.*
+import kotlinx.coroutines.launch
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
@@ -85,6 +88,9 @@ class StopDutyActivity:AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     private var LATSTR=""
     private var LONGSTR=""
+
+    private var actualImage: File? = null
+    private var compressedImage: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -316,7 +322,7 @@ class StopDutyActivity:AppCompatActivity() {
             cancel = true
             tempCond = false
         }
-        if (photoFile==null) {
+        if (compressedImage==null) {
             message = "Please Provide Supporting Image"
             focusView = tansKM
             cancel = true
@@ -358,8 +364,10 @@ class StopDutyActivity:AppCompatActivity() {
 
                 reqEntity!!.addPart("st_km", StringBody(privateTransKm))
 
-                dl_upload_file = photoFile!!.absoluteFile
-                reqEntity!!.addPart("file_url_1", FileBody(dl_upload_file))
+              //  dl_upload_file = photoFile!!.absoluteFile
+             //   reqEntity!!.addPart("file_url_1", FileBody(dl_upload_file))
+
+                reqEntity!!.addPart("file_url_1", FileBody(compressedImage))
 
 
 
@@ -519,15 +527,48 @@ class StopDutyActivity:AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            val takenImage = data?.extras?.get("data") as Bitmap
-            val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
-            foodPic.setImageBitmap(takenImage)
+            //  val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //   foodPic.setImageBitmap(takenImage)
+            actualImage=photoFile
+            // val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //   foodPic.setImageBitmap(takenImage)
+            // actualImageView.setImageBitmap(takenImage)
+            // actualSizeTextView.text = String.format("Size : %s", getReadableFileSize(actualImage!!.length()))
+            compressImage()
+
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+
+            compressedImage=null
         }
 
     }
+
+    private fun compressImage() {
+        actualImage?.let { imageFile ->
+            lifecycleScope.launch {
+                // Default compression
+                compressedImage = Compressor.compress(this@StopDutyActivity, imageFile)
+                setCompressedImage()
+            }
+        } ?: showError("Please choose an image!")
+    }
+
+    private fun showError(errorMessage: String) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setCompressedImage() {
+        compressedImage?.let {
+            foodPic.setImageBitmap(BitmapFactory.decodeFile(it.absolutePath))
+            // compressedSizeTextView.text = String.format("Size : %s", getReadableFileSize(it.length()))
+            //Toast.makeText(this, "Compressed image save in " + it.path, Toast.LENGTH_LONG).show()
+            //  Log.d("Compressor", "Compressed image save in " + it.path)
+        }
+    }
+
 
 
     private fun callStopDuty() {

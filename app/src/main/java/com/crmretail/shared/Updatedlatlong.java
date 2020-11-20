@@ -34,6 +34,11 @@ public class Updatedlatlong {
 		return prefs.getString(context.getString(R.string.shared_updated_location), context.getString(R.string.shared_no_data));
 
 	}
+
+	public String myMsg(){
+
+		return prefs.getString("mycustomMSg","");
+	}
 	
 	
 	/*public String getSourcelat(){

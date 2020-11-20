@@ -215,7 +215,9 @@ class SplashScreen : AppCompatActivity() {
             .withPermissions(
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.CAMERA
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+
 
 
             )
@@ -227,7 +229,7 @@ class SplashScreen : AppCompatActivity() {
                         // ScanFinction();
                         if (UserShared(this@SplashScreen).getLoggedInStatus()) {
 
-
+/*
                             if (psh.dutyStatus){
 
                                 startLocationService()
@@ -236,7 +238,7 @@ class SplashScreen : AppCompatActivity() {
 
                                 stopLocationService()
 
-                            }
+                            }*/
                             startActivity(Intent(this@SplashScreen, HomeActivity::class.java))
                             finish()
                         } else {
@@ -269,19 +271,19 @@ class SplashScreen : AppCompatActivity() {
     }
 
 
-    open fun stopLocationService() {
+    /*open fun stopLocationService() {
         pshlat = Updatedlatlong(applicationContext)
         Log.i("GPSTRACKER", "called stopLocationService from application")
-        stopService(Intent(this, LocationUpdate::class.java))
+        stopService(Intent(this, LocationMonitoringService::class.java))
         prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
 
     open fun startLocationService() {
         pshlat = Updatedlatlong(applicationContext)
         Log.i("GPSTRACKER", "called startLocationService from application")
-        startService(Intent(this, LocationUpdate::class.java))
+        startService(Intent(this, LocationMonitoringService::class.java))
         prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
-    }
+    }*/
 
     private fun showSettingsDialog() {
 

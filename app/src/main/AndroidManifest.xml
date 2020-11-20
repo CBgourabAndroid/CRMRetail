@@ -275,14 +275,13 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <service android:name=".MyService" />
-        <service
-            android:name=".LocationUpdate"
-            android:exported="false" />
-        <receiver android:name="com.crmretail.LocationUpdate">
+       <!-- <receiver android:name="com.crmretail.LocationUpdate">
             <intent-filter>
                 <action android:name="Refresh" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
+
+        <service android:name=".LocationMonitoringService" />
 
         <!--<service android:name=".GoogleService" />-->
     </application>

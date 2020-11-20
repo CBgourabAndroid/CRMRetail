@@ -361,14 +361,14 @@ open class MainActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSe
     open fun stopLocationService() {
         pshlat = Updatedlatlong(applicationContext)
         Log.i("GPSTRACKER", "called stopLocationService from application")
-        stopService(Intent(this, LocationUpdate::class.java))
+        stopService(Intent(this, LocationMonitoringService::class.java))
         prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
 
     open fun startLocationService() {
         pshlat = Updatedlatlong(applicationContext)
         Log.i("GPSTRACKER", "called startLocationService from application")
-        startService(Intent(this, LocationUpdate::class.java))
+        startService(Intent(this, LocationMonitoringService::class.java))
         prefsll = getSharedPreferences("LATLONG_SHARED_PREF", Context.MODE_PRIVATE)
     }
 
