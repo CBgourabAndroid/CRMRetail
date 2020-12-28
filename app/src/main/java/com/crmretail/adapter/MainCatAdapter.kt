@@ -93,8 +93,6 @@ open class MainCatAdapter : RecyclerView.Adapter<MainCatAdapter.MyViewHolder>(){
 
                     showDialogS()
 
-
-
                 }
                 else if (names!![listPosition].equals("Duty Planner")){
 

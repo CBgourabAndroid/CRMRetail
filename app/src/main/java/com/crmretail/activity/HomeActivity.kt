@@ -5,9 +5,8 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.*
 import android.content.pm.PackageManager
-import android.location.Location
+import android.location.*
 import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
@@ -43,6 +42,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -69,6 +69,9 @@ class HomeActivity : MainActivity() {
     private var LONGSTR=""
     lateinit var adapter:CheckListAdapter
     lateinit var dataList:ArrayList<CheckList>
+    var addresse: List<Address>? = null
+    var place: String? = null
+    var address:String? = null
 
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -93,7 +96,20 @@ class HomeActivity : MainActivity() {
                     val latitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LATITUDE)
                     val longitude = intent.getStringExtra(LocationMonitoringService.EXTRA_LONGITUDE)
                     if (latitude != null && longitude != null) {
-                        textView7.text=latitude+"\n"+longitude+"\n"+latPsh.myMsg()
+                        //textView7.text = latitude + "\n" + longitude + "\n" + latPsh.myMsg()
+                        val currentaddress =
+                            getstraddress(
+                                latitude.toDouble(),
+                                longitude.toDouble()
+                            )
+                        if (psh.dutyStatus){
+                            textView7.visibility=View.VISIBLE
+                            textView7.text= "Last Location & Time\n"+latPsh.myMsg()+"\n"+currentaddress
+                        }
+                        else{
+                            textView7.visibility=View.GONE
+                        }
+
                     }
                 }
             }, IntentFilter(LocationMonitoringService.ACTION_LOCATION_BROADCAST)
@@ -144,6 +160,27 @@ class HomeActivity : MainActivity() {
 
 
 
+    }
+
+
+    @Throws(IOException::class)
+    private fun getstraddress(latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        addresse = geocoder.getFromLocation(latitude, longitude, 1)
+        place = (addresse as MutableList<Address>?)!!.get(0).getAddressLine(0)
+        address = (addresse as MutableList<Address>?)!!.get(0).getAddressLine(1)
+
+        //source_txt.setText(place);
+        //set_flag="0";
+        // addsource_marker();
+        return if (address != null) {
+            place + "," + address
+        } else {
+            place
+        }
+        /*location_name_tv.setVisibility(View.VISIBLE);
+        location_name_tv.setText(place + "," + address);
+        source.setText(place + "," + address);*/
     }
 
     fun loadData(){

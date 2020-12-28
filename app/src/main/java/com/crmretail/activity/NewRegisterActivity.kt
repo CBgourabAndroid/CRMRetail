@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crmretail.AppController
@@ -38,7 +39,9 @@ import com.crmretail.adapter.FoodListAdapter
 import com.crmretail.fragment.SellingBrandAdapter
 import com.crmretail.modelClass.SelleingBrand
 import com.crmretail.shared.UserShared
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.contain_new_register.*
+import kotlinx.coroutines.launch
 import org.apache.http.client.ClientProtocolException
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
@@ -355,10 +358,17 @@ class NewRegisterActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            val takenImage = data?.extras?.get("data") as Bitmap
-            val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
-            supportImageNew.setImageBitmap(takenImage)
+           // val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //supportImageNew.setImageBitmap(takenImage)
+            actualImage=photoFile
+            // val takenImage = BitmapFactory.decodeFile(photoFile!!.absolutePath)
+            //   foodPic.setImageBitmap(takenImage)
+            // actualImageView.setImageBitmap(takenImage)
+            // actualSizeTextView.text = String.format("Size : %s", getReadableFileSize(actualImage!!.length()))
+            compressImage()
         }
         else if (requestCode==123){
 
@@ -389,9 +399,32 @@ class NewRegisterActivity : AppCompatActivity() {
         }
 
         else {
-            super.onActivityResult(requestCode, resultCode, data)
+
         }
 
+    }
+
+    private fun compressImage() {
+        actualImage?.let { imageFile ->
+            lifecycleScope.launch {
+                // Default compression
+                compressedImage = Compressor.compress(this@NewRegisterActivity, imageFile)
+                setCompressedImage()
+            }
+        } ?: showError("Please choose an image!")
+    }
+
+    private fun showError(errorMessage: String) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setCompressedImage() {
+        compressedImage?.let {
+            supportImageNew.setImageBitmap(BitmapFactory.decodeFile(it.absolutePath))
+            // compressedSizeTextView.text = String.format("Size : %s", getReadableFileSize(it.length()))
+            //Toast.makeText(this, "Compressed image save in " + it.path, Toast.LENGTH_LONG).show()
+            //  Log.d("Compressor", "Compressed image save in " + it.path)
+        }
     }
 
     private fun setData() {
@@ -460,9 +493,7 @@ class NewRegisterActivity : AppCompatActivity() {
         }
 
 
-
-
-        if (photoFile==null) {
+        if (compressedImage==null) {
             message = "Please Provide Shop Image"
             focusView = supportImageNew
             cancel = true
@@ -535,8 +566,8 @@ class NewRegisterActivity : AppCompatActivity() {
 
                 }
 
-                dl_upload_file = photoFile!!.absoluteFile
-                reqEntity!!.addPart("file_url", FileBody(dl_upload_file))
+               // dl_upload_file = photoFile!!.absoluteFile
+                reqEntity!!.addPart("file_url", FileBody(compressedImage))
 
 
 

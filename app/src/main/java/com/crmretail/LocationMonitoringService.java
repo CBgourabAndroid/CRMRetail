@@ -170,7 +170,7 @@ public class LocationMonitoringService extends Service implements
 
 									}*/
                 Log.v("Hey still running..!!!", "After 2min Update??");
-                Toast.makeText(getApplicationContext(), "Hey still running..!!!", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getApplicationContext(), "Hey still running..!!!", Toast.LENGTH_SHORT).show();
                 UpdateLatLogToServer aTask = new UpdateLatLogToServer();
                 aTask.execute((Void) null);
 
@@ -294,7 +294,7 @@ public class LocationMonitoringService extends Service implements
                     Log.e(TAG, "MESSAGE FROM SERVER " + msg);
 
                     SharedPreferences.Editor editor1 = prefs.edit();
-                    editor1.putString("mycustomMSg", msg+" "+currentDateTime);
+                    editor1.putString("mycustomMSg", currentDateTime);
                     editor1.commit();
                     //Toast.makeText(LocationUpdate.this,msg,Toast.LENGTH_SHORT).show();
 
