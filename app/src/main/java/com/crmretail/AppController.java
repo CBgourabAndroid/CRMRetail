@@ -36,7 +36,7 @@ import org.json.JSONObject;
 
 public class AppController extends Application {
 
-    private static AppController ourInstance;
+    private static AppController  ourInstance;
     public static final String TAG = AppController.class
             .getSimpleName();
     MediaPlayer mMediaPlayer;
